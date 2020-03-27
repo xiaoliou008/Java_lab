@@ -1,5 +1,7 @@
 package hust.cs.javacourse.search.index;
 
+import hust.cs.javacourse.search.query.AbstractHit;
+
 import java.util.ArrayList;
 import java.util.List;
 
