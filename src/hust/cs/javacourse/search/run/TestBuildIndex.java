@@ -30,6 +30,7 @@ public class TestBuildIndex {
                 AbstractIndexBuilder indexBuilder = new IndexBuilder(new DocumentBuilder());
                 index = indexBuilder.buildIndex(Config.DOC_DIR);
                 System.out.println(index.toString());
+                System.out.println(Config.DOC_DIR);
                 break;
             case 0:
                 index = new Index();

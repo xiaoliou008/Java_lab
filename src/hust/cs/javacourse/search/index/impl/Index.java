@@ -30,16 +30,19 @@ public class Index extends AbstractIndex {
     public void addDocument(AbstractDocument document) {
         // 使用mp来保存单词到文档中位置的映射关系，作为中间结果
         Map<AbstractTerm, List<Integer>> mp = new HashMap<AbstractTerm, List<Integer>>();
-        for(AbstractTermTuple t : document.getTuples()){
+        for(AbstractTermTuple t : document.getTuples()){        // 遍历文档中的所有三元组
             if(mp.get(t.term) == null) mp.put(t.term, new ArrayList<Integer>());
-            mp.get(t.term).add(t.curPos);
+            mp.get(t.term).add(t.curPos);       // 把相同的单词的不同位置放入同一个List中
         }
+        // 更新倒排索引
         for(AbstractTerm t : mp.keySet()){
             if(super.termToPostingListMapping.get(t) == null)
                 super.termToPostingListMapping.put(t, new PostingList());
             super.termToPostingListMapping.get(t).add(
                     new Posting(document.getDocId(), mp.get(t).size(), mp.get(t)));
         }
+        // 更新文档编号到路径的映射表
+        super.docIdToDocPathMapping.put(document.getDocId(), document.getDocPath());
     }
 
     /**

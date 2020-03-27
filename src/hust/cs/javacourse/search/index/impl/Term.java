@@ -12,6 +12,19 @@ import java.io.ObjectOutputStream;
  */
 
 public class Term extends AbstractTerm {
+
+    /**
+     * 默认构造函数
+     */
+    public Term(){}
+
+    /**
+     * 额外的构造函数
+     * @param content ：单词的字符串表示
+     */
+    public Term(String content){
+        super.content = content;
+    }
     /**
      * @param obj ：要比较的另外一个Term
      * @return  :比较结果

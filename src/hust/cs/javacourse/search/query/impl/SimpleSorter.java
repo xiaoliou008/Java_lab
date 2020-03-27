@@ -16,7 +16,7 @@ public class SimpleSorter implements Sort {
     public void sort(List<AbstractHit> hits) {
         // 用lambda表达式代替功能类
         hits.sort((AbstractHit t1, AbstractHit t2)
-                -> ((int) Math.round(score(t1) - score(t2))));
+                -> (- (int) Math.round(score(t1) - score(t2))));
     }
 
     /**
