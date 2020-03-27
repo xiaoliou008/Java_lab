@@ -29,7 +29,7 @@ public class TermTupleScanner extends AbstractTermTupleScanner {
      */
     public TermTupleScanner(){
         this.pos = 0;
-        buf.clear();;
+        buf = new LinkedList<String>();
         splitter.setSplitRegex(Config.STRING_SPLITTER_REGEX);
     }
 
@@ -40,7 +40,7 @@ public class TermTupleScanner extends AbstractTermTupleScanner {
     public TermTupleScanner(BufferedReader input){
         super(input);
         this.pos = 0;
-        buf.clear();
+        buf = new LinkedList<String>();     // java.lang.NullPointerException if "buf.clear()"
         splitter.setSplitRegex(Config.STRING_SPLITTER_REGEX);
     }
 

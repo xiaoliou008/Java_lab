@@ -4,6 +4,7 @@ import hust.cs.javacourse.search.index.AbstractDocument;
 import hust.cs.javacourse.search.index.AbstractDocumentBuilder;
 import hust.cs.javacourse.search.index.AbstractIndex;
 import hust.cs.javacourse.search.index.AbstractIndexBuilder;
+import hust.cs.javacourse.search.util.Config;
 import hust.cs.javacourse.search.util.FileUtil;
 
 import java.io.File;
@@ -41,7 +42,7 @@ public class IndexBuilder extends AbstractIndexBuilder {
             AbstractDocument doc = super.docBuilder.build(++docNum, path, new File(path));
             index.addDocument(doc);     // 把文档加入倒排索引中
         }
-        File file = new File("index.dat");
+        File file = new File(Config.INDEX_DIR + "index.dat");
         if(!file.exists()){
             try {
                 if(!file.createNewFile())
