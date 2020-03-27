@@ -1,11 +1,9 @@
 package hust.cs.javacourse.search.query.impl;
 
 import hust.cs.javacourse.search.index.AbstractPosting;
-import hust.cs.javacourse.search.index.AbstractTerm;
 import hust.cs.javacourse.search.query.AbstractHit;
 import hust.cs.javacourse.search.query.Sort;
 
-import java.util.Comparator;
 import java.util.List;
 
 public class SimpleSorter implements Sort {
@@ -16,12 +14,9 @@ public class SimpleSorter implements Sort {
      */
     @Override
     public void sort(List<AbstractHit> hits) {
-        hits.sort(new Comparator<AbstractHit>() {
-            @Override
-            public int compare(AbstractHit abstractHit, AbstractHit t1) {
-                return (int) Math.round(score(abstractHit) - score(t1));
-            }
-        });
+        // 用lambda表达式代替功能类
+        hits.sort((AbstractHit t1, AbstractHit t2)
+                -> ((int) Math.round(score(t1) - score(t2))));
     }
 
     /**

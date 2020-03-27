@@ -12,12 +12,12 @@ public class TermTuple extends AbstractTermTuple {
     /**
      * 默认构造函数
      */
-    public TermTuple(){};
+    public TermTuple(){}
 
     /**
      * 使用term和curPos来构造TermTuple
-     * @param term
-     * @param curPos
+     * @param term ：单词
+     * @param curPos ：位置
      */
     public TermTuple(AbstractTerm term, int curPos){
         super.term = term;
@@ -26,8 +26,8 @@ public class TermTuple extends AbstractTermTuple {
 
     /**
      * 使用String类型代替Term，更便于使用
-     * @param content
-     * @param curPos
+     * @param content ：单词内容
+     * @param curPos ：位置
      */
     public TermTuple(String content, int curPos){
         super.term = new Term();
@@ -45,8 +45,8 @@ public class TermTuple extends AbstractTermTuple {
     public boolean equals(Object obj) {
         if(obj instanceof TermTuple){
             return (super.curPos == ((TermTuple) obj).curPos &&
-                    super.freq == ((TermTuple) obj).freq &&
-                    super.term.equals((TermTuple) obj));    // 不能用==
+//                    super.freq == ((TermTuple) obj).freq &&       // 这个表达式恒为true
+                    super.term.equals(obj));    // 不能用==
         }
         return false;
     }
