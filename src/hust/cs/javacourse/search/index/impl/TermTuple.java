@@ -46,7 +46,7 @@ public class TermTuple extends AbstractTermTuple {
         if(obj instanceof TermTuple){
             return (super.curPos == ((TermTuple) obj).curPos &&
                     super.freq == ((TermTuple) obj).freq &&
-                    super.term == ((TermTuple) obj).term);
+                    super.term.equals((TermTuple) obj));    // 不能用==
         }
         return false;
     }

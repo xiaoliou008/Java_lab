@@ -6,6 +6,7 @@ import hust.cs.javacourse.search.index.AbstractIndexBuilder;
 import hust.cs.javacourse.search.util.Config;
 
 import java.io.File;
+import java.util.TreeMap;
 
 /**
  * 测试索引构建
@@ -16,7 +17,6 @@ public class TestBuildIndex {
      * @param args : 命令行参数
      */
     public static void main(String[] args){
-
 
     }
 }

@@ -19,6 +19,21 @@ import java.util.List;
  */
 public class Posting extends AbstractPosting {
     /**
+     * 默认构造函数
+     */
+    public Posting(){}
+
+    /**
+     * 接受三个参数的构造函数
+     * @param docId
+     * @param freq
+     * @param positions
+     */
+    public Posting(int docId, int freq, List<Integer> positions){
+        super(docId, freq, positions);
+    }
+
+    /**
      * 判断二个Posting内容是否相同
      * 可以与PostingList的add相互映照，应当比较内容而非引用
      * @param obj ：要比较的另外一个Posting
@@ -29,7 +44,7 @@ public class Posting extends AbstractPosting {
         if(obj instanceof Posting){
             return ((super.docId == ((Posting) obj).docId) &&
                     (super.freq == ((Posting) obj).freq) &&
-                    (super.positions == ((Posting) obj).positions));
+                    (super.positions.equals(((Posting) obj).positions)));   // 不能用==
         }
         return false;
     }
