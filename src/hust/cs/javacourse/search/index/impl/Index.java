@@ -154,6 +154,5 @@ public class Index extends AbstractIndex {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-
     }
 }
