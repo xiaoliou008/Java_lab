@@ -1,0 +1,162 @@
+package hust.cs.javacourse.search.index.impl;
+
+import hust.cs.javacourse.search.index.AbstractPosting;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+
+/**
+ * @author :刘静平
+ *  实现Posting
+ *  Posting对象代表倒排索引里每一项， 一个Posting对象包括:
+ *  包含单词的文档id.
+ *  单词在文档里出现的次数.
+ *  单词在文档里出现的位置列表（位置下标不是以字符为编号，而是以单词为单位进行编号)
+ */
+public class Posting extends AbstractPosting {
+    /**
+     * 判断二个Posting内容是否相同
+     * 可以与PostingList的add相互映照，应当比较内容而非引用
+     * @param obj ：要比较的另外一个Posting
+     * @return 如果内容相等返回true，否则返回false
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof Posting){
+            return ((super.docId == ((Posting) obj).docId) &&
+                    (super.freq == ((Posting) obj).freq) &&
+                    (super.positions == ((Posting) obj).positions));
+        }
+        return false;
+    }
+
+    /**
+     * 返回Posting的字符串表示
+     * 用大括号来表示Posting的字符串
+     * @return 字符串
+     */
+    @Override
+    public String toString() {
+        return "{" + super.docId + ", " + super.freq + ", " + super.positions + "}";
+    }
+
+    /**
+     * 返回包含单词的文档id
+     *
+     * @return ：文档id
+     */
+    @Override
+    public int getDocId() {
+        return super.docId;
+    }
+
+    /**
+     * 设置包含单词的文档id
+     *
+     * @param docId ：包含单词的文档id
+     */
+    @Override
+    public void setDocId(int docId) {
+        super.docId = docId;
+    }
+
+    /**
+     * 返回单词在文档里出现的次数
+     *
+     * @return ：出现次数
+     */
+    @Override
+    public int getFreq() {
+        return super.freq;
+    }
+
+    /**
+     * 设置单词在文档里出现的次数
+     *
+     * @param freq :单词在文档里出现的次数
+     */
+    @Override
+    public void setFreq(int freq) {
+        super.freq = freq;
+    }
+
+    /**
+     * 返回单词在文档里出现的位置列表
+     *
+     * @return ：位置列表
+     */
+    @Override
+    public List<Integer> getPositions() {
+        return super.positions;
+    }
+
+    /**
+     * 设置单词在文档里出现的位置列表
+     *
+     * @param positions ：单词在文档里出现的位置列表
+     */
+    @Override
+    public void setPositions(List<Integer> positions) {
+        super.positions = positions;
+    }
+
+    /**
+     * 比较二个Posting对象的大小（根据docId）
+     *
+     * @param o ： 另一个Posting对象
+     * @return ：二个Posting对象的docId的差值
+     */
+    @Override
+    public int compareTo(AbstractPosting o) {
+        return super.docId - o.getDocId();
+    }
+
+    /**
+     * 对内部positions从小到大排序
+     */
+    @Override
+    public void sort() {
+        super.positions.sort(new Comparator<Integer>() {
+            @Override
+            public int compare(Integer integer, Integer t1) {
+                return integer.intValue() - t1.intValue();
+            }
+        });
+    }
+
+    /**
+     * 写到二进制文件
+     *
+     * @param out :输出流对象
+     */
+    @Override
+    public void writeObject(ObjectOutputStream out) {
+        try {
+            out.writeInt(super.docId);
+            out.writeInt(super.freq);
+            out.writeObject(super.positions);   // ArrayList本身实现了Serializable接口
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 从二进制文件读
+     *
+     * @param in ：输入流对象
+     */
+    @Override
+    public void readObject(ObjectInputStream in) {
+        try {
+            super.docId = in.readInt();
+            super.freq = in.readInt();
+            super.positions = (ArrayList<Integer>)in.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+}
