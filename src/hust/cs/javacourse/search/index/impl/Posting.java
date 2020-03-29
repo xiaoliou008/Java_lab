@@ -42,9 +42,9 @@ public class Posting extends AbstractPosting {
     @Override
     public boolean equals(Object obj) {
         if(obj instanceof Posting){
-            return ((super.docId == ((Posting) obj).docId) &&
-                    (super.freq == ((Posting) obj).freq) &&
-                    (super.positions.equals(((Posting) obj).positions)));   // 不能用==
+            return ((this.docId == ((Posting) obj).docId) &&
+                    (this.freq == ((Posting) obj).freq) &&
+                    (this.positions.equals(((Posting) obj).positions)));   // 不能用==
         }
         return false;
     }
@@ -56,7 +56,7 @@ public class Posting extends AbstractPosting {
      */
     @Override
     public String toString() {
-        return "{" + super.docId + ", " + super.freq + ", " + super.positions + "}";
+        return "{" + this.docId + ", " + this.freq + ", " + this.positions + "}";
     }
 
     /**
@@ -66,7 +66,7 @@ public class Posting extends AbstractPosting {
      */
     @Override
     public int getDocId() {
-        return super.docId;
+        return this.docId;
     }
 
     /**
@@ -76,7 +76,7 @@ public class Posting extends AbstractPosting {
      */
     @Override
     public void setDocId(int docId) {
-        super.docId = docId;
+        this.docId = docId;
     }
 
     /**
@@ -86,7 +86,7 @@ public class Posting extends AbstractPosting {
      */
     @Override
     public int getFreq() {
-        return super.freq;
+        return this.freq;
     }
 
     /**
@@ -96,7 +96,7 @@ public class Posting extends AbstractPosting {
      */
     @Override
     public void setFreq(int freq) {
-        super.freq = freq;
+        this.freq = freq;
     }
 
     /**
@@ -106,7 +106,7 @@ public class Posting extends AbstractPosting {
      */
     @Override
     public List<Integer> getPositions() {
-        return super.positions;
+        return this.positions;
     }
 
     /**
@@ -116,7 +116,7 @@ public class Posting extends AbstractPosting {
      */
     @Override
     public void setPositions(List<Integer> positions) {
-        super.positions = positions;
+        this.positions = positions;
     }
 
     /**
@@ -127,7 +127,7 @@ public class Posting extends AbstractPosting {
      */
     @Override
     public int compareTo(AbstractPosting o) {
-        return super.docId - o.getDocId();
+        return this.docId - o.getDocId();
     }
 
     /**
@@ -135,7 +135,7 @@ public class Posting extends AbstractPosting {
      */
     @Override
     public void sort() {
-        super.positions.sort(new Comparator<Integer>() {
+        this.positions.sort(new Comparator<Integer>() {
             @Override
             public int compare(Integer integer, Integer t1) {
                 return integer.intValue() - t1.intValue();
@@ -151,9 +151,9 @@ public class Posting extends AbstractPosting {
     @Override
     public void writeObject(ObjectOutputStream out) {
         try {
-            out.writeInt(super.docId);
-            out.writeInt(super.freq);
-            out.writeObject(super.positions);   // ArrayList本身实现了Serializable接口
+            out.writeInt(this.docId);
+            out.writeInt(this.freq);
+            out.writeObject(this.positions);   // ArrayList本身实现了Serializable接口
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -167,9 +167,9 @@ public class Posting extends AbstractPosting {
     @Override
     public void readObject(ObjectInputStream in) {
         try {
-            super.docId = in.readInt();
-            super.freq = in.readInt();
-            super.positions = (ArrayList<Integer>)in.readObject();
+            this.docId = in.readInt();
+            this.freq = in.readInt();
+            this.positions = (ArrayList<Integer>)in.readObject();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }

@@ -23,8 +23,8 @@ public class PostingList extends AbstractPostingList {
      */
     @Override
     public void add(AbstractPosting posting) {
-        if(!super.list.contains(posting)){
-            super.list.add(posting);
+        if(!this.list.contains(posting)){
+            this.list.add(posting);
         }
     }
 
@@ -35,7 +35,7 @@ public class PostingList extends AbstractPostingList {
      */
     @Override
     public String toString() {
-        return super.list.toString();
+        return this.list.toString();
     }
 
     /**
@@ -46,8 +46,8 @@ public class PostingList extends AbstractPostingList {
     @Override
     public void add(List<AbstractPosting> postings) {
         for(AbstractPosting e : postings){
-            if(!super.list.contains(e)){
-                super.list.add(e);
+            if(!this.list.contains(e)){
+                this.list.add(e);
             }
         }
     }
@@ -60,7 +60,7 @@ public class PostingList extends AbstractPostingList {
      */
     @Override
     public AbstractPosting get(int index) {
-        return super.list.get(index);
+        return this.list.get(index);
     }
 
     /**
@@ -71,7 +71,7 @@ public class PostingList extends AbstractPostingList {
      */
     @Override
     public int indexOf(AbstractPosting posting) {
-        return super.list.indexOf(posting);
+        return this.list.indexOf(posting);
     }
 
     /**
@@ -82,8 +82,8 @@ public class PostingList extends AbstractPostingList {
      */
     @Override
     public int indexOf(int docId) {
-        for(int i=0;i<super.list.size();i++){
-            if(super.list.get(i).getDocId() == docId){
+        for(int i=0;i<this.list.size();i++){
+            if(this.list.get(i).getDocId() == docId){
                 return i;
             }   // 遍历整个列表
         }
@@ -98,7 +98,7 @@ public class PostingList extends AbstractPostingList {
      */
     @Override
     public boolean contains(AbstractPosting posting) {
-        return super.list.contains(posting);
+        return this.list.contains(posting);
     }
 
     /**
@@ -108,7 +108,7 @@ public class PostingList extends AbstractPostingList {
      */
     @Override
     public void remove(int index) {
-        super.list.remove(index);
+        this.list.remove(index);
     }
 
     /**
@@ -118,7 +118,7 @@ public class PostingList extends AbstractPostingList {
      */
     @Override
     public void remove(AbstractPosting posting) {
-        super.list.remove(posting);
+        this.list.remove(posting);
     }
 
     /**
@@ -128,7 +128,7 @@ public class PostingList extends AbstractPostingList {
      */
     @Override
     public int size() {
-        return super.list.size();
+        return this.list.size();
     }
 
     /**
@@ -136,7 +136,7 @@ public class PostingList extends AbstractPostingList {
      */
     @Override
     public void clear() {
-        super.list.clear();
+        this.list.clear();
     }
 
     /**
@@ -146,7 +146,7 @@ public class PostingList extends AbstractPostingList {
      */
     @Override
     public boolean isEmpty() {
-        return super.list.isEmpty();
+        return this.list.isEmpty();
     }
 
     /**
@@ -154,7 +154,7 @@ public class PostingList extends AbstractPostingList {
      */
     @Override
     public void sort() {
-        super.list.sort(new Comparator<AbstractPosting>() {
+        this.list.sort(new Comparator<AbstractPosting>() {
             @Override
             public int compare(AbstractPosting t1, AbstractPosting t2) {
                 return t1.getDocId() - t2.getDocId();
@@ -170,7 +170,7 @@ public class PostingList extends AbstractPostingList {
     @Override
     public void writeObject(ObjectOutputStream out) {
         try {
-            out.writeObject(super.list);
+            out.writeObject(this.list);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -184,7 +184,7 @@ public class PostingList extends AbstractPostingList {
     @Override
     public void readObject(ObjectInputStream in) {
         try {
-            super.list = (List<AbstractPosting>)in.readObject();
+            this.list = (List<AbstractPosting>)in.readObject();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {

@@ -45,7 +45,7 @@ public class Hit extends AbstractHit {
      */
     @Override
     public int getDocId() {
-        return super.docId;
+        return this.docId;
     }
 
     /**
@@ -55,7 +55,7 @@ public class Hit extends AbstractHit {
      */
     @Override
     public String getDocPath() {
-        return super.docPath;
+        return this.docPath;
     }
 
     /**
@@ -65,7 +65,7 @@ public class Hit extends AbstractHit {
      */
     @Override
     public String getContent() {
-        return super.content;
+        return this.content;
     }
 
     /**
@@ -75,7 +75,7 @@ public class Hit extends AbstractHit {
      */
     @Override
     public void setContent(String content) {
-        super.content = content;
+        this.content = content;
     }
 
     /**
@@ -85,7 +85,7 @@ public class Hit extends AbstractHit {
      */
     @Override
     public double getScore() {
-        return super.score;
+        return this.score;
     }
 
     /**
@@ -95,7 +95,7 @@ public class Hit extends AbstractHit {
      */
     @Override
     public void setScore(double score) {
-        super.score = score;
+        this.score = score;
     }
 
     /**
@@ -105,7 +105,7 @@ public class Hit extends AbstractHit {
      */
     @Override
     public Map<AbstractTerm, AbstractPosting> getTermPostingMapping() {
-        return super.termPostingMapping;
+        return this.termPostingMapping;
     }
 
     /**
@@ -115,8 +115,8 @@ public class Hit extends AbstractHit {
      */
     @Override
     public String toString() {
-        return "{docID=" + super.docId + ", " +
-                "score=" + super.score + "}";
+        return "{docID=" + this.docId + ", " +
+                "score=" + this.score + "}";
     }
 
     /**
@@ -127,6 +127,6 @@ public class Hit extends AbstractHit {
      */
     @Override
     public int compareTo(AbstractHit o) {
-        return (int) Math.round(super.score - o.getScore());
+        return (int) Math.round(this.score - o.getScore());
     }
 }

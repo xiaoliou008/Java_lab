@@ -39,7 +39,7 @@ public class Document extends AbstractDocument {
      */
     @Override
     public int getDocId() {
-        return super.docId;
+        return this.docId;
     }
 
     /**
@@ -49,7 +49,7 @@ public class Document extends AbstractDocument {
      */
     @Override
     public void setDocId(int docId) {
-        super.docId = docId;
+        this.docId = docId;
     }
 
     /**
@@ -59,7 +59,7 @@ public class Document extends AbstractDocument {
      */
     @Override
     public String getDocPath() {
-        return super.docPath;
+        return this.docPath;
     }
 
     /**
@@ -69,7 +69,7 @@ public class Document extends AbstractDocument {
      */
     @Override
     public void setDocPath(String docPath) {
-        super.docPath = docPath;
+        this.docPath = docPath;
     }
 
     /**
@@ -79,7 +79,7 @@ public class Document extends AbstractDocument {
      */
     @Override
     public List<AbstractTermTuple> getTuples() {
-        return super.tuples;
+        return this.tuples;
     }
 
     /**
@@ -89,8 +89,8 @@ public class Document extends AbstractDocument {
      */
     @Override
     public void addTuple(AbstractTermTuple tuple) {
-        if(!super.tuples.contains(tuple)){
-            super.tuples.add(tuple);
+        if(!this.tuples.contains(tuple)){
+            this.tuples.add(tuple);
         }
     }
 
@@ -102,7 +102,7 @@ public class Document extends AbstractDocument {
      */
     @Override
     public boolean contains(AbstractTermTuple tuple) {
-        return super.tuples.contains(tuple);
+        return this.tuples.contains(tuple);
     }
 
     /**
@@ -113,7 +113,7 @@ public class Document extends AbstractDocument {
      */
     @Override
     public AbstractTermTuple getTuple(int index) {
-        return super.tuples.get(index);
+        return this.tuples.get(index);
     }
 
     /**
@@ -123,7 +123,7 @@ public class Document extends AbstractDocument {
      */
     @Override
     public int getTupleSize() {
-        return super.tuples.size();
+        return this.tuples.size();
     }
 
     /**
@@ -133,8 +133,8 @@ public class Document extends AbstractDocument {
      */
     @Override
     public String toString() {
-        return "{ID=" + super.docId + ", " +
-                "Path=" + super.docPath + ", " +
-                "Tuples=" + super.tuples.toString() + "}";
+        return "{ID=" + this.docId + ", " +
+                "Path=" + this.docPath + ", " +
+                "Tuples=" + this.tuples.toString() + "}";
     }
 }

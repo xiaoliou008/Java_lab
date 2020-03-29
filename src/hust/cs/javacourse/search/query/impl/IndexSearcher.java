@@ -23,8 +23,8 @@ public class IndexSearcher extends AbstractIndexSearcher {
      */
     @Override
     public void open(String indexFile) {
-        super.index.load(new File(indexFile));
-        super.index.optimize();     // 对各种数据排序
+        this.index.load(new File(indexFile));
+        this.index.optimize();     // 对各种数据排序
     }
 
     /**

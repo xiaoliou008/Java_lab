@@ -53,7 +53,7 @@ public class TermTupleScanner extends AbstractTermTupleScanner {
     public AbstractTermTuple next() {
         try {
             if(buf.isEmpty()){      // 缓冲区空了就再读一行
-                String line = super.input.readLine();
+                String line = this.input.readLine();
                 if(line == null) return null;   // 输入流空了
                 buf = new LinkedList<String>(splitter.splitByRegex(line));
                 if(buf.isEmpty()) return null;

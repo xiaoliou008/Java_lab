@@ -20,8 +20,8 @@ public class TermTuple extends AbstractTermTuple {
      * @param curPos ：位置
      */
     public TermTuple(AbstractTerm term, int curPos){
-        super.term = term;
-        super.curPos = curPos;
+        this.term = term;
+        this.curPos = curPos;
     }
 
     /**
@@ -30,9 +30,9 @@ public class TermTuple extends AbstractTermTuple {
      * @param curPos ：位置
      */
     public TermTuple(String content, int curPos){
-        super.term = new Term();
-        super.term.setContent(content);
-        super.curPos = curPos;
+        this.term = new Term();
+        this.term.setContent(content);
+        this.curPos = curPos;
     }
 
     /**
@@ -44,9 +44,9 @@ public class TermTuple extends AbstractTermTuple {
     @Override
     public boolean equals(Object obj) {
         if(obj instanceof TermTuple){
-            return (super.curPos == ((TermTuple) obj).curPos &&
-//                    super.freq == ((TermTuple) obj).freq &&       // 这个表达式恒为true
-                    super.term.equals(obj));    // 不能用==
+            return (this.curPos == ((TermTuple) obj).curPos &&
+//                    this.freq == ((TermTuple) obj).freq &&       // 这个表达式恒为true
+                    this.term.equals(obj));    // 不能用==
         }
         return false;
     }
@@ -58,6 +58,6 @@ public class TermTuple extends AbstractTermTuple {
      */
     @Override
     public String toString() {
-        return "(" + super.term.toString() + ", " + super.freq + ", " + super.curPos + ")";
+        return "(" + this.term.toString() + ", " + this.freq + ", " + this.curPos + ")";
     }
 }

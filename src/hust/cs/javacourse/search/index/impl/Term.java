@@ -23,7 +23,7 @@ public class Term extends AbstractTerm {
      * @param content ：单词的字符串表示
      */
     public Term(String content){
-        super.content = content;
+        this.content = content;
     }
     /**
      * @param obj ：要比较的另外一个Term
@@ -32,7 +32,7 @@ public class Term extends AbstractTerm {
     @Override
     public boolean equals(Object obj) {
         if(obj instanceof Term){    // 先判断类型是否相同
-            return super.content.equals(((Term) obj).content);
+            return this.content.equals(((Term) obj).content);
         }
         return false;
     }
@@ -42,7 +42,7 @@ public class Term extends AbstractTerm {
      */
     @Override
     public String toString() {
-        return "\"" + super.content + "\"";
+        return "\"" + this.content + "\"";
     }
 
     /**
@@ -50,7 +50,7 @@ public class Term extends AbstractTerm {
      */
     @Override
     public String getContent() {
-        return super.content;
+        return this.content;
     }
 
     /**
@@ -58,7 +58,7 @@ public class Term extends AbstractTerm {
      */
     @Override
     public void setContent(String content) {
-        super.content = content;
+        this.content = content;
     }
 
     /**
@@ -67,7 +67,7 @@ public class Term extends AbstractTerm {
      */
     @Override
     public int compareTo(AbstractTerm o) {
-        return super.content.compareTo(o.getContent());
+        return this.content.compareTo(o.getContent());
     }
 
     /**

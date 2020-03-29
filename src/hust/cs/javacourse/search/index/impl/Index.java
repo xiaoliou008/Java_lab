@@ -18,7 +18,7 @@ public class Index extends AbstractIndex {
      */
     @Override
     public String toString() {
-        return super.termToPostingListMapping.toString();
+        return this.termToPostingListMapping.toString();
     }
 
     /**
@@ -36,13 +36,13 @@ public class Index extends AbstractIndex {
         }
         // 更新倒排索引
         for(AbstractTerm t : mp.keySet()){
-            if(super.termToPostingListMapping.get(t) == null)
-                super.termToPostingListMapping.put(t, new PostingList());
-            super.termToPostingListMapping.get(t).add(
+            if(this.termToPostingListMapping.get(t) == null)
+                this.termToPostingListMapping.put(t, new PostingList());
+            this.termToPostingListMapping.get(t).add(
                     new Posting(document.getDocId(), mp.get(t).size(), mp.get(t)));
         }
         // 更新文档编号到路径的映射表
-        super.docIdToDocPathMapping.put(document.getDocId(), document.getDocPath());
+        this.docIdToDocPathMapping.put(document.getDocId(), document.getDocPath());
     }
 
     /**
@@ -85,7 +85,7 @@ public class Index extends AbstractIndex {
      */
     @Override
     public AbstractPostingList search(AbstractTerm term) {
-        return super.termToPostingListMapping.get(term);
+        return this.termToPostingListMapping.get(term);
     }
 
     /**
@@ -95,7 +95,7 @@ public class Index extends AbstractIndex {
      */
     @Override
     public Set<AbstractTerm> getDictionary() {
-        return new HashSet<AbstractTerm>(super.termToPostingListMapping.keySet());
+        return new HashSet<AbstractTerm>(this.termToPostingListMapping.keySet());
     }
 
     /**
@@ -108,7 +108,7 @@ public class Index extends AbstractIndex {
      */
     @Override
     public void optimize() {
-        for(AbstractPostingList list : super.termToPostingListMapping.values()) {
+        for(AbstractPostingList list : this.termToPostingListMapping.values()) {
             list.sort();            // 对PostingList排序
             for(int i=0;i<list.size();i++){
                 list.get(i).sort(); // 对position排序
@@ -124,7 +124,7 @@ public class Index extends AbstractIndex {
      */
     @Override
     public String getDocName(int docId) {
-        return super.docIdToDocPathMapping.get(docId);
+        return this.docIdToDocPathMapping.get(docId);
     }
 
     /**
@@ -135,8 +135,8 @@ public class Index extends AbstractIndex {
     @Override
     public void writeObject(ObjectOutputStream out) {
         try {
-            out.writeObject(super.termToPostingListMapping);
-            out.writeObject(super.docIdToDocPathMapping);
+            out.writeObject(this.termToPostingListMapping);
+            out.writeObject(this.docIdToDocPathMapping);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -150,8 +150,8 @@ public class Index extends AbstractIndex {
     @Override
     public void readObject(ObjectInputStream in) {
         try {
-            super.termToPostingListMapping = (Map<AbstractTerm, AbstractPostingList>)in.readObject();
-            super.docIdToDocPathMapping = (Map<Integer, String>)in.readObject();
+            this.termToPostingListMapping = (Map<AbstractTerm, AbstractPostingList>)in.readObject();
+            this.docIdToDocPathMapping = (Map<Integer, String>)in.readObject();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
