@@ -8,11 +8,16 @@ import hust.cs.javacourse.search.query.Sort;
 import hust.cs.javacourse.search.query.impl.IndexSearcher;
 import hust.cs.javacourse.search.query.impl.SimpleSorter;
 import hust.cs.javacourse.search.util.Config;
+import hust.cs.javacourse.search.util.StopWords;
 
 import javax.swing.plaf.nimbus.AbstractRegionPainter;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -33,6 +38,11 @@ public class TestSearchIndex {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         while((req = br.readLine()) != null && !req.equals("q")){
             String[] reqs = req.split("[\\s]+");   // 用空白符切分输入的这行
+            List<String> stopWords = new ArrayList<String>(Arrays.asList(StopWords.STOP_WORDS));
+            for(String s : reqs){
+                if(stopWords.contains(s))
+                    System.out.println("\033[31mWarning: 停用词: " + s + "\033[0m");
+            }
             if(reqs.length < 1){
                 System.out.println("请至少输入一个单词");
             } else if(reqs.length == 1){
@@ -68,7 +78,7 @@ public class TestSearchIndex {
                         System.out.println(h.toString());
 
                 } else {
-                    System.out.println("逻辑关系解析失败");
+                    System.out.println("\033[31m逻辑关系解析失败\033[0m");
                     System.out.println("输入格式： word combine word");
                     System.out.println("combine :   or: +,|  and: &,*");
                 }

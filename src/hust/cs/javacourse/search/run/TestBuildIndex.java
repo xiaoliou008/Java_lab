@@ -30,6 +30,8 @@ public class TestBuildIndex {
                 AbstractIndexBuilder indexBuilder = new IndexBuilder(new DocumentBuilder());
                 index = indexBuilder.buildIndex(Config.DOC_DIR);
                 System.out.println(index.toString());
+                if(index.getDictionary().isEmpty())
+                    System.out.println("Warning: 索引表为空！");
                 System.out.println(Config.DOC_DIR);
                 break;
             case 0:

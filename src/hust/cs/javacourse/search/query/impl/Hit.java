@@ -115,8 +115,25 @@ public class Hit extends AbstractHit {
      */
     @Override
     public String toString() {
-        return "{docID=" + this.docId + ", " +
-                "score=" + this.score + "}";
+        StringBuffer buf = new StringBuffer("{\tdocPath = ");
+        buf.append(this.docPath).append(",\n");
+        buf.append("\tdocID = ").append(this.docId).append(",\n");
+        buf.append("\tscore = ").append(this.score).append(",\n");
+        int times = 0;
+        for(AbstractPosting p : this.termPostingMapping.values()){
+            times += p.getPositions().size();
+        }
+        buf.append("\ttimes = ").append(times).append(",\n");
+        buf.append("\tcontent =").append('\n');
+//        buf.append(this.content).append("\n}");
+        String content_o = content;
+        for(AbstractTerm t : this.termPostingMapping.keySet()){
+            String regex = t.getContent();      // 高亮
+            content_o = content_o.replaceAll(regex.replaceAll("\\s", "\\\\s"),
+                    "\033[32m" + regex + "\033[0m");
+        }
+        buf.append(content_o).append("\n}");
+        return buf.toString();
     }
 
     /**

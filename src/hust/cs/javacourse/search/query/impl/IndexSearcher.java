@@ -178,6 +178,7 @@ public class IndexSearcher extends AbstractIndexSearcher {
                     Map<AbstractTerm, AbstractPosting> mp =
                             new HashMap<AbstractTerm, AbstractPosting>();
                     // 把两个单词合并放入映射表中，中间用一个空格隔开，位置则使用两个单词中第一个单词所在的位置
+                    // 这样在高亮显示的时候就可以了（要注意把空格替换成\\s，以避免原文中相邻单词直接有多个空格的情况）
                     mp.put(new Term(queryTerm1.getContent() + " " + queryTerm2.getContent()),
                             new Posting(post1.getDocId(), positions.size(), positions));
                     AbstractHit h = new Hit(post1.getDocId(), path, mp);
