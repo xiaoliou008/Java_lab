@@ -56,4 +56,11 @@ public class DocumentBuilder extends AbstractDocumentBuilder {
         }
         return this.build(docId, docPath, termTupleStream);
     }
+
+    public static void main(String[] args) {
+        AbstractDocumentBuilder builder = new DocumentBuilder();
+        String path = "H:\\study\\JAVA\\Experiment1Test\\test\\text\\4.txt";
+//        String path = "H:\\study\\JAVA\\Java新实验一\\SearchEngineForStudent\\text\\2.txt";
+        System.out.println(builder.build(0, path, new File(path)).toString());
+    }
 }

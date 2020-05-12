@@ -45,8 +45,9 @@ public class TermTuple extends AbstractTermTuple {
     public boolean equals(Object obj) {
         if(obj instanceof TermTuple){
             return (this.curPos == ((TermTuple) obj).curPos &&
-//                    this.freq == ((TermTuple) obj).freq &&       // 这个表达式恒为true
-                    this.term.equals(obj));    // 不能用==
+                    this.freq == ((TermTuple) obj).freq &&       // 这个表达式恒为true
+//                    this.term.equals(obj));    // 不能用==       // 无法通过测试，因为恒为假
+                    this.term.equals(((TermTuple) obj).term));
         }
         return false;
     }

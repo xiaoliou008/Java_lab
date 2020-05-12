@@ -39,7 +39,8 @@ public class IndexBuilder extends AbstractIndexBuilder {
     public AbstractIndex buildIndex(String rootDirectory) {
         AbstractIndex index = new Index();
         for(String path: FileUtil.list(rootDirectory)){ // 遍历目录中的所有文件
-            AbstractDocument doc = this.docBuilder.build(++docNum, path, new File(path));
+//            AbstractDocument doc = this.docBuilder.build(++docNum, path, new File(path));   // 无法通过测试
+            AbstractDocument doc = this.docBuilder.build(docNum++, path, new File(path));   // 文章索引从0开始
             index.addDocument(doc);     // 把文档加入倒排索引中
         }
         File file = new File(Config.INDEX_DIR + "index.dat");
@@ -55,3 +56,4 @@ public class IndexBuilder extends AbstractIndexBuilder {
         return index;
     }
 }
+

@@ -124,7 +124,7 @@ public class IndexSearcher extends AbstractIndexSearcher {
                 i++;
             }
             while(j < size2){
-                AbstractPosting post2 = postList2.get(i);
+                AbstractPosting post2 = postList2.get(j);       // AbstractPosting post2 = postList2.get(i); 造成越界
                 String path = index.getDocName(post2.getDocId());
                 Map<AbstractTerm, AbstractPosting> mp =
                         new HashMap<AbstractTerm, AbstractPosting>();

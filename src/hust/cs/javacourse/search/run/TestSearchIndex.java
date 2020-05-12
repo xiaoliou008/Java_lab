@@ -1,24 +1,19 @@
 package hust.cs.javacourse.search.run;
 
 import hust.cs.javacourse.search.index.impl.Term;
-import hust.cs.javacourse.search.parse.AbstractTermTupleStream;
 import hust.cs.javacourse.search.query.AbstractHit;
 import hust.cs.javacourse.search.query.AbstractIndexSearcher;
-import hust.cs.javacourse.search.query.Sort;
 import hust.cs.javacourse.search.query.impl.IndexSearcher;
 import hust.cs.javacourse.search.query.impl.SimpleSorter;
 import hust.cs.javacourse.search.util.Config;
 import hust.cs.javacourse.search.util.StopWords;
 
-import javax.swing.plaf.nimbus.AbstractRegionPainter;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * 测试搜索
@@ -65,7 +60,7 @@ public class TestSearchIndex {
 
                 if(reqs[1].equals("&") || reqs[1].equals("*")){     // 与
                     AbstractHit[] hits = searcher.search(new Term(reqs[0]), new Term(reqs[2]),
-                            simpleSorter, AbstractIndexSearcher.LogicalCombination.ADN);
+                            simpleSorter, AbstractIndexSearcher.LogicalCombination.AND);
                     if(hits == null || hits.length < 1) System.out.println("未搜索到任何结果");
                     else for(AbstractHit h: hits)
                         System.out.println(h.toString());

@@ -23,7 +23,8 @@ public abstract class AbstractIndexSearcher {
         /**
          * 与,即多个检索词必须都在命中文档里出现
          */
-        ADN,
+        AND,
+        // 原来的 ADN 无法通过测试
         /**
          * 或, 即任意一个检索词在命中文档里出现
          */

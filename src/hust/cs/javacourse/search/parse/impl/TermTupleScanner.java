@@ -52,19 +52,22 @@ public class TermTupleScanner extends AbstractTermTupleScanner {
     @Override
     public AbstractTermTuple next() {
         try {
-            if(buf.isEmpty()){      // 缓冲区空了就再读一行
+//            if(buf.isEmpty()){      // 缓冲区空了就再读一行
+            while (buf.isEmpty()){      // 改成while，防止遇到空行
                 String line = this.input.readLine();
                 if(line == null) return null;   // 输入流空了
                 buf = new LinkedList<String>(splitter.splitByRegex(line));
-                if(buf.isEmpty()) return null;
+//                if(buf.isEmpty()) return null;        // 这里返回null会导致遇到空行就停止扫描
             }
             String word = buf.getFirst();
             buf.removeFirst();
-            return new TermTuple(word, ++this.pos);     // pos记录全局位置
+//            return new TermTuple(word, ++this.pos);     // 无法通过测试
+            return new TermTuple(word.toLowerCase(), this.pos++);     // pos从0开始，大写转小写
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         return null;
     }
+
 }

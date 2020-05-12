@@ -42,7 +42,8 @@ public class Term extends AbstractTerm {
      */
     @Override
     public String toString() {
-        return "\"" + this.content + "\"";
+//        return "\"" + this.content + "\"";
+        return this.content;        // 为了满足测试需要
     }
 
     /**
@@ -77,7 +78,8 @@ public class Term extends AbstractTerm {
     @Override
     public void writeObject(ObjectOutputStream out) {
         try {
-            out.writeUTF(this.content);
+//            out.writeUTF(this.content);       // 无法通过测试
+            out.writeObject(this.content);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -91,8 +93,9 @@ public class Term extends AbstractTerm {
     @Override
     public void readObject(ObjectInputStream in) {
         try {
-            this.content = in.readUTF();
-        } catch (IOException e) {
+//            this.content = in.readUTF();          // 无法通过测试
+            this.content = (String) in.readObject();
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
