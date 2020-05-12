@@ -44,7 +44,10 @@ public class Posting extends AbstractPosting {
         if(obj instanceof Posting){
             return ((this.docId == ((Posting) obj).docId) &&
                     (this.freq == ((Posting) obj).freq) &&
-                    (this.positions.equals(((Posting) obj).positions)));   // 不能用==
+//                    (this.positions.equals(((Posting) obj).positions)) &&     // 要考虑顺序不同也算内容相同
+                    (this.positions.containsAll(((Posting) obj).positions)) &&
+                    (((Posting) obj).positions.containsAll(this.positions))
+                    );   // 不能用==
         }
         return false;
     }
