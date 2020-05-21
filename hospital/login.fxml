@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="266.0" prefWidth="419.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hospital.LoginController">
+   <children>
+      <Button fx:id="btn_patient_login" layoutX="170.0" layoutY="57.0" mnemonicParsing="false" onAction="#patientLoginBtnHandler" prefHeight="39.0" prefWidth="79.0" text="病人登陆" />
+      <Button fx:id="btn_doctor_login" layoutX="170.0" layoutY="154.0" mnemonicParsing="false" onAction="#doctorLoginBtnHandler" prefHeight="39.0" prefWidth="79.0" text="医生登陆" />
+   </children>
+</Pane>
