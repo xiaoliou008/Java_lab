@@ -1,6 +1,8 @@
 package hospital.patient;
 
-import java.sql.Date;
+import com.mysql.cj.protocol.Resultset;
+
+import java.sql.*;
 
 public class PatientTuple {
     private String BRBH;
@@ -31,5 +33,24 @@ public class PatientTuple {
 
     public Date getDLRQ() {
         return DLRQ;
+    }
+
+    /**
+     * 获取病人的余额
+     * @return
+     */
+    public double getYE(Connection conn) throws SQLException {
+        String sql = "SELECT YCJE FROM T_BRXX WHERE BRBH=" + BRBH;
+        PreparedStatement preparedStatement = conn.prepareStatement(sql);
+        ResultSet res = preparedStatement.executeQuery();
+        if(res.next()){
+            return res.getDouble("YCJE");
+        } else return 0.0;
+    }
+
+    public void setYE(Connection conn, double setYCJE) throws SQLException {
+        String sql = "UPDATE T_BRXX SET YCJE=" + setYCJE + " WHERE BRBH=" + BRBH;
+        PreparedStatement preparedStatement = conn.prepareStatement(sql);
+        preparedStatement.executeUpdate();
     }
 }

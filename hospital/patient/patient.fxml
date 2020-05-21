@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
@@ -20,16 +21,16 @@
             </Text>
             <HBox alignment="TOP_CENTER" prefHeight="19.0" prefWidth="538.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="当前病人：" textAlignment="CENTER" wrappingWidth="102.109375">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="当前病人：" textAlignment="CENTER" wrappingWidth="90.109375">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Text>
-                  <TextField fx:id="textFieldPatientName" editable="false" prefHeight="21.0" prefWidth="97.0" style="-fx-background-color: transparent;">
+                  <Text fx:id="textPatientName" layoutX="179.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="44.109375">
                      <font>
-                        <Font size="10.0" />
+                        <Font size="18.0" />
                      </font>
-                  </TextField>
+                  </Text>
                </children>
             </HBox>
             <Pane prefHeight="21.0" prefWidth="538.0" />
@@ -104,10 +105,13 @@
                   <TextField fx:id="textFieldGHHM" prefHeight="22.0" prefWidth="170.0" stylesheets="@PatientComboBox.css" />
                </children>
             </HBox>
-            <Pane layoutX="10.0" layoutY="169.0" prefHeight="16.0" prefWidth="538.0" />
+            <Pane layoutX="10.0" layoutY="169.0" prefHeight="39.0" prefWidth="538.0">
+               <children>
+                  <CheckBox fx:id="checkBoxYuE" layoutX="239.0" layoutY="8.0" mnemonicParsing="false" onAction="#checkBoxHandler" text="使用余额" />
+               </children></Pane>
             <HBox alignment="CENTER" prefHeight="45.0" prefWidth="367.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#OKHandler" prefHeight="42.0" prefWidth="90.0" text="确定" />
+                  <Button fx:id="OKButton" mnemonicParsing="false" onAction="#OKHandler" prefHeight="42.0" prefWidth="90.0" text="确定" />
                   <Pane prefHeight="52.0" prefWidth="47.0" />
                   <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#clearHandler" prefHeight="42.0" prefWidth="90.0" text="清除" />
                   <Pane layoutX="100.0" layoutY="10.0" prefHeight="52.0" prefWidth="47.0" />

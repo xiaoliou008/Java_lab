@@ -20,6 +20,10 @@ public class HaoZhongType implements PYZSAccessible {
         return isExpert ? "专家" : "普通";
     }
 
+    public boolean getSFZJ(){
+        return isExpert;
+    }
+
     @Override
     public String toString() {
         return getName();

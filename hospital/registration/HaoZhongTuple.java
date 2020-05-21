@@ -44,6 +44,14 @@ public class HaoZhongTuple implements PYZSAccessible {
         return HZMC;
     }
 
+    public String getKSBH() {
+        return KSBH;
+    }
+
+    public boolean isSFZJ() {
+        return SFZJ;
+    }
+
     @Override
     public String toString() {
         return HZMC + "-" + (SFZJ ? "专家" : "普通");

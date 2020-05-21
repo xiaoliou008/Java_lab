@@ -11,11 +11,12 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import trysql.ConnectionFactory;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.SQLException;
+import hospital.mysql.*;
 
 public class Main extends Application {
     Stage stage;
@@ -40,8 +41,8 @@ public class Main extends Application {
         stage.show();
 
         // debug patient
-//        changeScene(new PatientTuple(
-//                "000003", "张三", "zs", 10.0, new Date(new java.util.Date().getTime())));
+        changeScene(new PatientTuple(
+                "000003", "张三", "zs", 10.0, new Date(new java.util.Date().getTime())));
 
         // debug doctor
 //        changeScene(new YiShengTuple(
@@ -64,7 +65,7 @@ public class Main extends Application {
     public void changeScene(PatientTuple patient) throws IOException, SQLException {
         changeScene("patient/patient.fxml", "病人挂号");
         ((PatientController)controller).setPatient(patient);
-        ((PatientController)controller).getTextFieldPatientName().setText(patient.getBRMC());
+        ((PatientController)controller).getTextPatientName().setText(patient.getBRMC());
     }
 
     public void changeScene(YiShengTuple doctor) throws IOException, SQLException {
