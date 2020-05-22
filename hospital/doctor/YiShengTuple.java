@@ -1,8 +1,12 @@
 package hospital.doctor;
 
+import hospital.mysql.ConnectionFactory;
 import hospital.shared.PYZSAccessible;
 
+import java.sql.Connection;
 import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 public class YiShengTuple implements PYZSAccessible {
 
@@ -61,5 +65,19 @@ public class YiShengTuple implements PYZSAccessible {
     @Override
     public String toString() {
         return YSMC + "-" + PYZS + "-" + (SFZJ ? "专家" : "普通");
+    }
+
+    /**
+     * 更新医生的登陆时间
+     * @param conn
+     */
+    public void updateLogin(Connection conn) throws SQLException {
+        String now = ConnectionFactory.getSQLTime(conn);
+        String sql = "UPDATE T_BRXX\n" +
+                "SET DLRQ = '" + now +
+                "'\nWHERE YSBH = " + YSBH;
+        System.out.println(sql);
+        PreparedStatement statement = conn.prepareStatement(sql);
+        statement.executeUpdate();
     }
 }

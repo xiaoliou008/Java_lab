@@ -6,10 +6,12 @@ import hospital.department.KeShi;
 import hospital.department.KeShiTuple;
 import hospital.doctor.YiSheng;
 import hospital.doctor.YiShengTuple;
+import hospital.patient.config.ConfigComboBox;
+import hospital.patient.config.ConfigTextField;
 import hospital.registration.HaoZhong;
 import hospital.registration.HaoZhongTuple;
 import hospital.registration.HaoZhongType;
-import hospital.update.UpdateGHXX;
+import hospital.patient.update.UpdateGHXX;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -226,9 +228,9 @@ public class PatientController extends Controller {
                 comboBoxKSMC.getSelectionModel().isEmpty() ||
                 comboBoxYSXM.getSelectionModel().isEmpty() ||
                 comboBoxHZMC.getSelectionModel().isEmpty() ||
-                textFieldZLJE.getText().isEmpty() ||
+                (!textFieldZLJE.isDisable() && textFieldZLJE.getText().isEmpty()) ||
                 textFieldYJJE.getText().isEmpty() ||
-                textFieldJKJE.getText().isEmpty()) {
+                (!textFieldJKJE.isDisable() && textFieldJKJE.getText().isEmpty())) {
             System.out.println("挂号失败");
             Alert alert = new Alert(Alert.AlertType.ERROR, "请填写完所有信息后挂号");
             alert.showAndWait().ifPresent(response -> {
@@ -238,9 +240,10 @@ public class PatientController extends Controller {
             });
         }
         else {
+            double pay = Double.parseDouble(textFieldYJJE.getText());
+            String GHHM = null;
             if(checkBoxYuE.isSelected()){       // 使用余额缴费
                 double ye = patient.getYE(myApp.conn);
-                double pay = Double.parseDouble(textFieldYJJE.getText());
                 if(ye < pay){
                     String prompt = "病人账户余额不足\n" + "余额：" + ye + "\n应缴金额：" + pay;
                     Alert alert = new Alert(Alert.AlertType.ERROR, prompt);
@@ -251,12 +254,25 @@ public class PatientController extends Controller {
                     });
                     return;
                 }
-                // 余额充足，扣款
-                patient.setYE(myApp.conn, ye - pay);
+                GHHM = updateGHXX.update(comboBoxHZMC.getSelectionModel().getSelectedItem().getHZBH(),
+                        comboBoxYSXM.getSelectionModel().getSelectedItem().getYSBH(),
+                        patient.getBRBH(), pay/*, new Date()*/);    // 不使用系统时间，而是与数据库同步
+                if(!GHHM.equals("full")) {
+                    // 余额充足，扣款
+                    patient.setYE(myApp.conn, ye - pay);
+                    String prompt = "使用账户余额挂号成功\n" + "挂号后余额：" + (ye - pay);
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION, prompt);
+                    alert.showAndWait().ifPresent(response -> {
+                        if (response == ButtonType.OK) {
+                            alert.close();
+                        }
+                    });
+                }
             } else {        // 使用现金缴费
-                if(Double.parseDouble(textFieldZLJE.getText()) < 0){
-                    String prompt = "病人交易余额不足\n" +
-                            "不足金额数：" + (-Double.parseDouble(textFieldZLJE.getText()));
+                double rest = Double.parseDouble(textFieldZLJE.getText());
+                if(rest < 0){
+                    String prompt = "病人交易余额不足\n应缴金额：" + pay +
+                            "\n不足金额数：" + (-Double.parseDouble(textFieldZLJE.getText()));
                     Alert alert = new Alert(Alert.AlertType.ERROR, prompt);
                     alert.showAndWait().ifPresent(response -> {
                         if (response == ButtonType.OK) {
@@ -265,13 +281,40 @@ public class PatientController extends Controller {
                     });
                     return;
                 }
+                GHHM = updateGHXX.update(comboBoxHZMC.getSelectionModel().getSelectedItem().getHZBH(),
+                        comboBoxYSXM.getSelectionModel().getSelectedItem().getYSBH(),
+                        patient.getBRBH(), pay/*, new Date()*/);    // 不使用系统时间，而是与数据库同步
+                if(!GHHM.equals("full")) {
+                    String prompt = "使用现金挂号成功\n" + "挂号后找零：" + rest +
+                            "\n是否选择存入账户余额？";
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION, prompt);
+                    alert.showAndWait().ifPresent(response -> {
+                        if (response == ButtonType.OK) {
+                            System.out.println("存款");
+                            try {
+                                patient.setYE(myApp.conn, patient.getYE(myApp.conn) + rest);
+                            } catch (SQLException e) {
+                                e.printStackTrace();
+                            }
+                            alert.close();
+                        }
+                    });
+                }
             }
-            System.out.println("挂号成功");
-            String GHHM = updateGHXX.update(comboBoxHZMC.getSelectionModel().getSelectedItem().getHZBH(),
-                            comboBoxYSXM.getSelectionModel().getSelectedItem().getYSBH(),
-                            patient.getBRBH(), 10.0, new Date());
-            textFieldGHHM.setText(GHHM);
-            OKButton.setDisable(true);      // 避免重复挂号
+            if(GHHM.equals("full")){
+                String prompt = "该号种人数已满\n挂号失败";
+                Alert alert = new Alert(Alert.AlertType.ERROR, prompt);
+                alert.showAndWait().ifPresent(response -> {
+                    if (response == ButtonType.OK) {
+                        alert.close();
+                    }
+                });
+                return;
+            } else {        // 挂号成功
+                System.out.println("挂号成功");
+                textFieldGHHM.setText(GHHM);
+                OKButton.setDisable(true);      // 避免重复挂号
+            }
         }
         // debug
 //        updateGHXX.update("000001", "000001", "000001", 10.0, new Date());

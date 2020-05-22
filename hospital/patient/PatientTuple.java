@@ -1,6 +1,7 @@
 package hospital.patient;
 
 import com.mysql.cj.protocol.Resultset;
+import hospital.mysql.ConnectionFactory;
 
 import java.sql.*;
 
@@ -48,9 +49,29 @@ public class PatientTuple {
         } else return 0.0;
     }
 
+    /**
+     * 设置病人的余额
+     * @param conn
+     * @param setYCJE
+     * @throws SQLException
+     */
     public void setYE(Connection conn, double setYCJE) throws SQLException {
         String sql = "UPDATE T_BRXX SET YCJE=" + setYCJE + " WHERE BRBH=" + BRBH;
         PreparedStatement preparedStatement = conn.prepareStatement(sql);
         preparedStatement.executeUpdate();
+    }
+
+    /**
+     * 更新病人的登陆时间
+     * @param conn
+     */
+    public void updateLogin(Connection conn) throws SQLException {
+        String now = ConnectionFactory.getSQLTime(conn);
+        String sql = "UPDATE T_BRXX\n" +
+                    "SET DLRQ = '" + now +
+                    "'\nWHERE BRBH = " + BRBH;
+        System.out.println(sql);
+        PreparedStatement statement = conn.prepareStatement(sql);
+        statement.executeUpdate();
     }
 }

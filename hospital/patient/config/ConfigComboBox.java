@@ -1,4 +1,4 @@
-package hospital.patient;
+package hospital.patient.config;
 
 import hospital.shared.PYZSAccessible;
 import javafx.beans.binding.ListBinding;
@@ -32,7 +32,7 @@ public class ConfigComboBox<E> {
         comboBox.setVisibleRowCount(6);
 
         comboBox.getEditor().setOnMouseMoved(mouseEvent -> {        // 鼠标移动是输入模块上的事件
-            if(comboBox.isFocused())
+            if(comboBox.isFocused())        // 可以把这个关掉来实现实验所需的效果
                 comboBox.show();
         });
         comboBox.getEditor().setOnMouseClicked(mouseEvent -> {

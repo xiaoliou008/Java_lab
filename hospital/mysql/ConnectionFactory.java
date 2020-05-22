@@ -1,8 +1,6 @@
 package hospital.mysql;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class ConnectionFactory {
     public static Connection create(String url, String root, String pwd){
@@ -22,4 +20,14 @@ public class ConnectionFactory {
         return conn;
     }
 
+    public static String getSQLTime(Connection conn) throws SQLException {
+        String sql = "SELECT now()";
+        PreparedStatement statement = conn.prepareStatement(sql);
+        ResultSet res = statement.executeQuery();
+        if(res.next()){
+//            return res.getDate(1);
+            return res.getString(1);
+        }
+        return null;
+    }
 }

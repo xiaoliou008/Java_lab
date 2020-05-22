@@ -8,6 +8,7 @@ import hospital.registration.Regist;
 import hospital.registration.RegistTuple;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.Pane;
 import javafx.stage.WindowEvent;
@@ -24,6 +25,8 @@ public class DoctorController extends Controller {
     @FXML public TableView tableIncome;
     @FXML public Pane panePatient;
     @FXML public TableView tablePatient;
+    @FXML public DatePicker DatePickerBegin;
+    @FXML public DatePicker DatePickerEnd;
     private Main myApp;
     private YiShengTuple doctor;
     private Regist register;

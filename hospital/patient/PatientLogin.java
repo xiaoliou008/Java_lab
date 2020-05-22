@@ -17,7 +17,7 @@ public class PatientLogin {
             preparedStatement.setString(1, ID);
             preparedStatement.setString(2, passwd);
             ResultSet res = preparedStatement.executeQuery();
-            if (res.next()) {
+            if (res.next()) {       // 登陆成功
                 return new PatientTuple(
                         res.getString("BRBH"),
                         res.getString("BRMC"),

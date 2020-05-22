@@ -1,4 +1,4 @@
-package hospital.patient;
+package hospital.patient.config;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;

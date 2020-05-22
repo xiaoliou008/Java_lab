@@ -29,9 +29,9 @@ public class PatientLoginController extends Controller {
         PatientTuple patient =
                 patientLogin.login(textPatientID.getCharacters().toString(), passwordPatient.getCharacters().toString());
         if(patient != null){
+            patient.updateLogin(myApp.conn);
             patientLogin.close();
             myApp.changeScene(patient);
-
         } else {
             textPatientPrompt.setText("\n编号或密码错误！");        // 不加\n的话，显示会有问题
         }

@@ -1,4 +1,4 @@
-package hospital.patient;
+package hospital.patient.config;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
