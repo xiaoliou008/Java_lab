@@ -10,10 +10,12 @@ public class UpdateGHXX {
     private Connection conn;
     private String sql_max = "SELECT MAX(GHBH) FROM T_GHXX";
     private String sql_insert = "INSERT INTO T_GHXX VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
-    private String sql_getNum = "SELECT COUNT(*) FROM T_GHXX WHERE HZBH=?";
+    private String sql_getNum = "SELECT COUNT(*) FROM T_GHXX WHERE HZBH=? AND THBZ=0";
+    private String sql_cancel = "UPDATE T_GHXX SET THBZ = 1 WHERE GHBH = ?";
     private PreparedStatement getMax;
     private PreparedStatement insert;
     private PreparedStatement count;
+    private PreparedStatement cancelStat;
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
 
     public UpdateGHXX(Connection connection) throws SQLException {
@@ -21,6 +23,7 @@ public class UpdateGHXX {
         getMax = conn.prepareStatement(sql_max);
         insert = conn.prepareStatement(sql_insert);
         count = conn.prepareStatement(sql_getNum);
+        cancelStat = conn.prepareStatement(sql_cancel);
     }
 
     /**
@@ -121,7 +124,7 @@ public class UpdateGHXX {
      * @param hzbh
      * @return
      */
-    public int getNum(String hzbh) throws SQLException {
+    private int getNum(String hzbh) throws SQLException {
         count.setString(1, hzbh);
         ResultSet res = count.executeQuery();
         int num = Integer.MAX_VALUE;
@@ -130,7 +133,7 @@ public class UpdateGHXX {
         }
         String sql_rs = "SELECT GHRS\n" +
                         "FROM T_HZXX\n" +
-                        "WHERE HZBH=" + hzbh;
+                        "WHERE HZBH=" + hzbh;     // 退号的不算
         res = conn.prepareStatement(sql_rs).executeQuery();
         int rs = 0;
         if(res.next()){     // 这个不能少，next将游标下移一行
@@ -140,5 +143,10 @@ public class UpdateGHXX {
             return -1;      // -1表示人数已满
         else
             return num + 1; // +1表示当前病人的人次
+    }
+
+    public void cancel(String ghbh) throws SQLException {
+        cancelStat.setString(1, ghbh);
+        cancelStat.executeUpdate();
     }
 }

@@ -12,6 +12,7 @@ import hospital.registration.HaoZhong;
 import hospital.registration.HaoZhongTuple;
 import hospital.registration.HaoZhongType;
 import hospital.patient.update.UpdateGHXX;
+import hospital.shared.ExitAlert;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -73,13 +74,7 @@ public class PatientController extends Controller {
 
     public void patientExit(ActionEvent e) throws SQLException {
         // 注意：WindowEvent不能转换成Event类型
-        Alert alert = new Alert(Alert.AlertType.WARNING, "确定退出挂号系统？");
-        alert.showAndWait().ifPresent(response -> {
-            if (response == ButtonType.OK) {
-                WindowEvent.fireEvent(myApp.getStage(), new WindowEvent(myApp.getStage(), WINDOW_CLOSE_REQUEST));
-                exit(0);
-            }
-        });
+        ExitAlert.show(myApp);
     }
 
     private void configComboBox() throws SQLException {
@@ -212,6 +207,7 @@ public class PatientController extends Controller {
     }
 
     public void clearHandler(ActionEvent actionEvent) {
+        disableAllField(false);
         comboBoxKSMC.getSelectionModel().clearSelection();
         comboBoxKSMC.getEditor().clear();
         // 其他的选项框自动清除
@@ -314,6 +310,7 @@ public class PatientController extends Controller {
                 System.out.println("挂号成功");
                 textFieldGHHM.setText(GHHM);
                 OKButton.setDisable(true);      // 避免重复挂号
+                disableAllField(true);
             }
         }
         // debug
@@ -327,6 +324,41 @@ public class PatientController extends Controller {
         } else {
             textFieldJKJE.setDisable(false);
             textFieldZLJE.setDisable(false);
+        }
+    }
+
+    private void disableAllField(boolean disable){
+        comboBoxKSMC.setDisable(disable);
+        comboBoxHZMC.setDisable(disable);
+        comboBoxYSXM.setDisable(disable);
+        comboBoxHZLB.setDisable(disable);
+        textFieldJKJE.setDisable(disable);
+//        textFieldZLJE.setDisable(disable);
+//        textFieldGHHM.setDisable(disable);
+//        textFieldYJJE.setDisable(disable);
+    }
+
+    public void menuTHHandler(ActionEvent actionEvent) {
+        String ghbh = textFieldGHHM.getText();
+        if(comboBoxKSMC.isDisable() && ghbh != null) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "确定退号？");
+            alert.showAndWait().ifPresent(response -> {
+                if (response == ButtonType.OK) {
+                    System.out.println("退号");
+                    try {
+                        updateGHXX.cancel(ghbh);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "尚未完成挂号！");
+            alert.showAndWait().ifPresent(response -> {
+                if (response == ButtonType.OK) {
+                    alert.close();
+                }
+            });
         }
     }
 }

@@ -4,7 +4,10 @@ import hospital.doctor.DoctorController;
 import hospital.doctor.YiShengTuple;
 import hospital.patient.PatientController;
 import hospital.patient.PatientTuple;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -16,7 +19,9 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.SQLException;
+
 import hospital.mysql.*;
+import javafx.util.Duration;
 
 public class Main extends Application {
     Stage stage;
@@ -24,16 +29,19 @@ public class Main extends Application {
     public Connection conn;
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
         stage = primaryStage;
         FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
         Pane root = loader.load();
 
         String url = "jdbc:mysql://localhost:3306/hospital";
-        conn = ConnectionFactory.create(url,"root","root");
+        // "jdbc:mysql://localhost:3306/javacourse?serverTimezone=GMT" 可以避免时区问题？
+        conn = ConnectionFactory.create(url, "root", "root");
 
         controller = loader.getController();
         controller.setMyApp(this);
+
+        setTimeTitle(primaryStage);
 
         stage.setScene(new Scene(root));
         stage.setTitle("登陆");
@@ -64,18 +72,18 @@ public class Main extends Application {
 
     public void changeScene(PatientTuple patient) throws IOException, SQLException {
         changeScene("patient/patient.fxml", "病人挂号");
-        ((PatientController)controller).setPatient(patient);
-        ((PatientController)controller).getTextPatientName().setText(patient.getBRMC());
+        ((PatientController) controller).setPatient(patient);
+        ((PatientController) controller).getTextPatientName().setText(patient.getBRMC());
     }
 
     public void changeScene(YiShengTuple doctor) throws IOException, SQLException {
-        changeScene("doctor/doctor.fxml", "医生");
-        ((DoctorController)controller).setDoctor(doctor);
-        ((DoctorController)controller).configTable();
+        changeScene("doctor/doctor.fxml", "医生：" + doctor.getName());
+        ((DoctorController) controller).setDoctor(doctor);
+        ((DoctorController) controller).configTable();
 //        ((DoctorController)controller).getTextFieldPatientName().setText(doctor.getBRMC());
     }
 
-    class WindowCloseHandler implements EventHandler<WindowEvent>{
+    class WindowCloseHandler implements EventHandler<WindowEvent> {
 
         @Override
         public void handle(WindowEvent windowEvent) {
@@ -90,6 +98,20 @@ public class Main extends Application {
 
     public Stage getStage() {
         return stage;
+    }
+
+    private void setTimeTitle(Stage primaryStage) {
+        EventHandler<ActionEvent> timeEventHandler = e -> {
+            try {
+                String origin = primaryStage.getTitle().split(" ")[0];
+                primaryStage.setTitle(origin + "   " + ConnectionFactory.getSQLTime(conn));
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        };
+        Timeline animation = new Timeline(new KeyFrame(Duration.millis(1000), timeEventHandler));
+        animation.setCycleCount(Timeline.INDEFINITE);
+        animation.play();
     }
 
     static public void main(String[] args) {

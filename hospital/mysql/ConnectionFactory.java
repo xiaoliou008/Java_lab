@@ -25,7 +25,6 @@ public class ConnectionFactory {
         PreparedStatement statement = conn.prepareStatement(sql);
         ResultSet res = statement.executeQuery();
         if(res.next()){
-//            return res.getDate(1);
             return res.getString(1);
         }
         return null;

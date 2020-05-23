@@ -28,6 +28,7 @@ public class DoctorLoginController extends Controller {
         YiShengTuple doctor =
                 doctorLogin.login(textDoctorID.getCharacters().toString(), passwordDoctor.getCharacters().toString());
         if(doctor != null){
+            doctor.updateLogin(myApp.conn);     // 更新登陆日期
             doctorLogin.close();
             myApp.changeScene(doctor);
         } else {

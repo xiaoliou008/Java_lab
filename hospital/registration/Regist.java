@@ -13,7 +13,7 @@ public class Regist {
     private Connection conn;
     private String sql =    "SELECT GHBH, BRMC, RQSJ, SFZJ " +
                             "FROM T_GHXX, T_HZXX, T_BRXX " +
-                            "WHERE YSBH=? AND T_GHXX.HZBH=T_HZXX.HZBH AND T_GHXX.BRBH=T_BRXX.BRBH";
+                            "WHERE YSBH=? AND T_GHXX.HZBH=T_HZXX.HZBH AND T_GHXX.BRBH=T_BRXX.BRBH ";
     private PreparedStatement preparedStatement;
 
     public Regist(Connection connection) throws SQLException {
@@ -33,5 +33,16 @@ public class Regist {
                     res.getBoolean("SFZJ")));
         }
         return list;
+    }
+
+    public List<RegistTuple> getRelation(YiShengTuple doctor, String begin, String end) throws SQLException {
+        List<RegistTuple> res = new ArrayList<RegistTuple>();
+        for(RegistTuple t : getRelation(doctor)){
+            if(t.getDate().toString().compareTo(begin) >= 0 &&
+                    t.getDate().toString().compareTo(end) <= 0){
+                res.add(t);
+            }
+        }
+        return res;
     }
 }
