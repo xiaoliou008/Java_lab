@@ -10,7 +10,7 @@ public class UpdateGHXX {
     private Connection conn;
     private String sql_max = "SELECT MAX(GHBH) FROM T_GHXX";
     private String sql_insert = "INSERT INTO T_GHXX VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
-    private String sql_getNum = "SELECT COUNT(*) FROM T_GHXX WHERE HZBH=? AND THBZ=0";
+    private String sql_getNum = "SELECT COUNT(*) FROM T_GHXX WHERE HZBH=? AND THBZ=0 AND RQSJ BETWEEN ? AND ?";
     private String sql_cancel = "UPDATE T_GHXX SET THBZ = 1 WHERE GHBH = ?";
     private PreparedStatement getMax;
     private PreparedStatement insert;
@@ -125,7 +125,10 @@ public class UpdateGHXX {
      * @return
      */
     private int getNum(String hzbh) throws SQLException {
+        String today = ConnectionFactory.getSQLTime(conn).split(" ")[0];
         count.setString(1, hzbh);
+        count.setString(2, today + " 00:00:00");
+        count.setString(3, today + " 23:59:59");
         ResultSet res = count.executeQuery();
         int num = Integer.MAX_VALUE;
         if(res.next()){     // 返回个数
@@ -148,5 +151,16 @@ public class UpdateGHXX {
     public void cancel(String ghbh) throws SQLException {
         cancelStat.setString(1, ghbh);
         cancelStat.executeUpdate();
+        String sql = "SELECT GHFY FROM T_GHXX WHERE GHBH = " + ghbh;
+        PreparedStatement statement = conn.prepareStatement(sql);
+        ResultSet res = statement.executeQuery();
+        double money = 0;
+        if(res.next()){
+            money = res.getDouble(1);
+        }       // 退号之后，把钱还给病人，存入账户余额
+        System.out.println(money);
+        sql = "UPDATE T_BRXX SET YCJE = YCJE + " + money + " WHERE BRBH = " + ghbh;
+        statement = conn.prepareStatement(sql);
+        statement.executeUpdate();
     }
 }
