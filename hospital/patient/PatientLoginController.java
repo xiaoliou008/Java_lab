@@ -24,7 +24,12 @@ public class PatientLoginController extends Controller {
         patientLogin = new PatientLogin(myApp.conn);
     }
 
-
+    /**
+     * 按下登陆按钮
+     * @param e
+     * @throws IOException
+     * @throws SQLException
+     */
     public void patientLoginBtnOn(ActionEvent e) throws IOException, SQLException {
         PatientTuple patient =
                 patientLogin.login(textPatientID.getCharacters().toString(), passwordPatient.getCharacters().toString());

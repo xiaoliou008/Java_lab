@@ -57,14 +57,27 @@ public class PatientController extends Controller {
             new ArrayList<HaoZhongType>(Arrays.asList(new HaoZhongType("普通"), new HaoZhongType("专家")));
     private List<HaoZhongTuple> hzmcList;
 
+    /**
+     * 设置病人
+     * @param patient
+     */
     public void setPatient(PatientTuple patient) {
         this.patient = patient;
     }
 
+    /**
+     * 获取病人姓名
+     * @return
+     */
     public Text getTextPatientName() {
         return textPatientName;
     }
 
+    /**
+     * 设置myapp
+     * @param myApp
+     * @throws SQLException
+     */
     @Override
     public void setMyApp(Main myApp) throws SQLException {
         this.myApp = myApp;
@@ -75,11 +88,20 @@ public class PatientController extends Controller {
         configComboBox();
     }
 
+    /**
+     * 点击退出按钮
+     * @param e
+     * @throws SQLException
+     */
     public void patientExit(ActionEvent e) throws SQLException {
         // 注意：WindowEvent不能转换成Event类型
         ExitAlert.show(myApp);
     }
 
+    /**
+     * 配置combobox
+     * @throws SQLException
+     */
     private void configComboBox() throws SQLException {
         // 保证在没有选择科室之前，不能选择后面的内容
         comboBoxYSXM.setDisable(true);
@@ -209,6 +231,10 @@ public class PatientController extends Controller {
 //        });
     }
 
+    /**
+     * 点击清空按钮
+     * @param actionEvent
+     */
     public void clearHandler(ActionEvent actionEvent) {
         disableAllField(false);
         comboBoxKSMC.getSelectionModel().clearSelection();
@@ -229,6 +255,11 @@ public class PatientController extends Controller {
         menuOK.setDisable(false);
     }
 
+    /**
+     * 点击确定按钮
+     * @param actionEvent
+     * @throws SQLException
+     */
     public void OKHandler(ActionEvent actionEvent) throws SQLException {
         if(     comboBoxHZLB.getSelectionModel().isEmpty() ||
                 comboBoxKSMC.getSelectionModel().isEmpty() ||
@@ -328,6 +359,10 @@ public class PatientController extends Controller {
 //        updateGHXX.update("000001", "000001", "000001", 10.0, new Date());
     }
 
+    /**
+     * 点击checkBox
+     * @param actionEvent
+     */
     public void checkBoxHandler(ActionEvent actionEvent) {
         if(checkBoxYuE.isSelected()){
             textFieldJKJE.setDisable(true);
@@ -338,6 +373,10 @@ public class PatientController extends Controller {
         }
     }
 
+    /**
+     * 配置可编辑性
+     * @param disable
+     */
     private void disableAllField(boolean disable){
         comboBoxKSMC.setDisable(disable);
         comboBoxHZMC.setDisable(disable);
@@ -349,6 +388,10 @@ public class PatientController extends Controller {
 //        textFieldYJJE.setDisable(disable);
     }
 
+    /**
+     * 菜单退号
+     * @param actionEvent
+     */
     public void menuTHHandler(ActionEvent actionEvent) {
         String ghbh = textFieldGHHM.getText();
         if(comboBoxKSMC.isDisable() && ghbh != null) {
@@ -358,6 +401,8 @@ public class PatientController extends Controller {
                     System.out.println("退号");
                     try {
                         updateGHXX.cancel(ghbh, patient);
+                        HelpAlert.show(myApp, "退号成功！");
+                        alert.close();
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
@@ -373,16 +418,28 @@ public class PatientController extends Controller {
         }
     }
 
+    /**
+     * 菜单帮助关于
+     * @param actionEvent
+     */
     public void helperHandler(ActionEvent actionEvent) {
         HelpAlert.show(myApp);
     }
 
-
+    /**
+     * 查询余额
+     * @param actionEvent
+     * @throws SQLException
+     */
     public void askMoneyHandler(ActionEvent actionEvent) throws SQLException {
         double money = patient.getYE(myApp.conn);
         HelpAlert.show(myApp, "当前余额：" + money);
     }
 
+    /**
+     * 菜单存款
+     * @param actionEvent
+     */
     public void depositHandler(ActionEvent actionEvent) {
         TextInputDialog input = new TextInputDialog("请输入存款金额");
         input.showAndWait().ifPresent(response -> {
@@ -400,45 +457,3 @@ public class PatientController extends Controller {
         });
     }
 }
-
-
-//class TestA{
-//    String text;
-//    public TestA(){text = "";}
-//    public TestA(String s){if(s != null) text = s; else text = "";}
-//    @Override
-//    public String toString() {
-//        return text;
-//    }
-//}
-
-
-//                if(t1 == null || t1.length() < 1){
-////                    comboBoxKSMC.setItems(ksmcItems);
-//                    comboBoxKSMC.setValue(s);
-//                    return;
-//                }
-//                if(s == null || s.length() < 1){
-//                    comboBoxKSMC.setValue(t1);
-//                    return;
-//                }
-//                if(t1.length() == s.length() || Math.abs(t1.length() - s.length()) > 1) return;
-////                if(t1.length() < s.length()) return;
-//                System.out.println("old = " + s);
-//                System.out.println("new = " + t1);
-//                FilteredList<String> newList = ksmcItems.filtered(new Predicate<String>() {
-//                    @Override
-//                    public boolean test(String s) {
-//                        return s.contains(t1);
-//                    }
-//                });
-//                if(newList.isEmpty()){
-//                    comboBoxKSMC.setItems(null);
-//                    comboBoxKSMC.setPlaceholder(new Label("无"));
-//                    return;
-//                }
-//                else comboBoxKSMC.setItems(newList);
-////                else comboBoxKSMC.getItems().setAll(newList);
-////                comboBoxKSMC.show();
-//                comboBoxKSMC.hide();
-////                comboBoxKSMC.setValue(t1);

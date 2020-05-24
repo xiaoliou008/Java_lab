@@ -68,7 +68,7 @@
             </HBox>
             <HBox alignment="TOP_CENTER" prefHeight="43.0" prefWidth="433.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#bntPatientHandler" prefHeight="35.0" prefWidth="80.0" text="病人列表">
+                  <Button mnemonicParsing="false" onAction="#btnPatientHandler" prefHeight="35.0" prefWidth="80.0" text="病人列表">
                      <HBox.margin>
                         <Insets left="30.0" right="30.0" />
                      </HBox.margin>
@@ -94,7 +94,7 @@
         <menus>
           <Menu mnemonicParsing="false" text="查询">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#bntPatientHandler" text="病人">
+              <MenuItem mnemonicParsing="false" onAction="#btnPatientHandler" text="病人">
                      <accelerator>
                         <KeyCodeCombination alt="ANY" code="A" control="UP" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator></MenuItem>

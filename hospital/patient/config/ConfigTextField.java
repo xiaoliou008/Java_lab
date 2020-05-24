@@ -8,6 +8,10 @@ import javafx.scene.input.KeyEvent;
 import java.util.regex.Pattern;
 
 public class ConfigTextField {
+    /**
+     * 配置TextField
+     * @param textField
+     */
     public static void config(TextField textField){         // 限制只能输入数字和至多一个小数点，最多两位小数
         textField.textProperty().addListener(new ChangeListener<String>() {
             @Override

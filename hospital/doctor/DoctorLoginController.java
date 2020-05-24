@@ -11,6 +11,9 @@ import javafx.scene.text.Text;
 import java.io.IOException;
 import java.sql.SQLException;
 
+/**
+ * 医生登陆
+ */
 public class DoctorLoginController extends Controller {
     @FXML public TextField textDoctorID;
     @FXML public PasswordField passwordDoctor;

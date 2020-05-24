@@ -53,6 +53,10 @@ public class DoctorController extends Controller {
         DatePickerEnd.setValue(LocalDate.now());
     }
 
+    /**
+     * 配置表格
+     * @throws SQLException
+     */
     public void configTable() throws SQLException {
         paneIncome.setVisible(false);
         panePatient.setVisible(true);
@@ -67,22 +71,39 @@ public class DoctorController extends Controller {
         tableIncome.getItems().setAll(incomeTupleList);
     }
 
-    public void bntPatientHandler(ActionEvent actionEvent) {
+    /**
+     * 选择病人
+     * @param actionEvent
+     */
+    public void btnPatientHandler(ActionEvent actionEvent) {
         textTitle.setText("病人列表");
         panePatient.setVisible(true);
         paneIncome.setVisible(false);
     }
 
+    /**
+     * 选择收入
+     * @param actionEvent
+     */
     public void btnIncomeHandler(ActionEvent actionEvent) {
         textTitle.setText("收入列表");
         panePatient.setVisible(false);
         paneIncome.setVisible(true);
     }
 
+    /**
+     * 退出按钮
+     * @param actionEvent
+     */
     public void btnExitHandler(ActionEvent actionEvent) {
         ExitAlert.show(myApp);
     }
 
+    /**
+     * 选择起始日期
+     * @param actionEvent
+     * @throws SQLException
+     */
     public void datePicketBeginHandler(ActionEvent actionEvent) throws SQLException {
         System.out.println(DatePickerBegin.getValue());
         listRegistTuple = register.getRelation(
@@ -93,17 +114,31 @@ public class DoctorController extends Controller {
         tableIncome.getItems().setAll(incomeTupleList);
     }
 
+    /**
+     * 选择结束日期
+     * @param actionEvent
+     * @throws SQLException
+     */
     public void datePicketEndHandler(ActionEvent actionEvent) throws SQLException {
         System.out.println(DatePickerEnd.getValue());
         datePicketBeginHandler(actionEvent);
     }
 
+    /**
+     * 菜单栏初始化选项
+     * @param actionEvent
+     * @throws SQLException
+     */
     public void menuInitHandler(ActionEvent actionEvent) throws SQLException {
         DatePickerBegin.setValue(LocalDate.now());
         DatePickerEnd.setValue(LocalDate.now());
         configTable();
     }
 
+    /**
+     * 菜单栏帮助
+     * @param actionEvent
+     */
     public void helperHandler(ActionEvent actionEvent) {
         HelpAlert.show(myApp);
     }

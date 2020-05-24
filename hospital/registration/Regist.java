@@ -13,7 +13,7 @@ public class Regist {
     private Connection conn;
     private String sql =    "SELECT GHBH, BRMC, RQSJ, SFZJ " +
                             "FROM T_GHXX, T_HZXX, T_BRXX " +
-                            "WHERE YSBH=? AND T_GHXX.HZBH=T_HZXX.HZBH AND T_GHXX.BRBH=T_BRXX.BRBH ";
+                            "WHERE YSBH=? AND T_GHXX.HZBH=T_HZXX.HZBH AND T_GHXX.BRBH=T_BRXX.BRBH AND T_GHXX.THBZ=0";
     private PreparedStatement preparedStatement;
 
     public Regist(Connection connection) throws SQLException {

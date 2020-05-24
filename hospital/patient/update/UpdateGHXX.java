@@ -6,6 +6,7 @@ import hospital.patient.PatientTuple;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Scanner;
 
 public class UpdateGHXX {
     private Connection conn;
@@ -55,6 +56,9 @@ public class UpdateGHXX {
                 // 获取挂号人次
                 int num = getNum(HZBH);
                 if(num < 0) return "full";  // 返回full表示人数已满
+                // 用于调试并发挂号
+                System.out.println("将要insert的挂号编号：" + num);
+
                 insert.setString(1, nextID);
                 insert.setString(2, HZBH);
                 insert.setString(3, YSBH);

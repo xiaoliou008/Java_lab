@@ -2,6 +2,9 @@ package hospital.registration;
 
 import hospital.shared.PYZSAccessible;
 
+/**
+ * 号种类
+ */
 public class HaoZhongTuple implements PYZSAccessible {
 
     private String HZBH;

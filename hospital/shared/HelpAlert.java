@@ -8,6 +8,9 @@ import javafx.stage.WindowEvent;
 import static java.lang.System.exit;
 import static javafx.stage.WindowEvent.WINDOW_CLOSE_REQUEST;
 
+/**
+ * 生成指定对话框
+ */
 public class HelpAlert {
     public static void show(Main myApp){
         Alert alert = new Alert(

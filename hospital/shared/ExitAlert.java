@@ -8,6 +8,9 @@ import javafx.stage.WindowEvent;
 import static java.lang.System.exit;
 import static javafx.stage.WindowEvent.WINDOW_CLOSE_REQUEST;
 
+/**
+ * 生成退出提示对话框
+ */
 public class ExitAlert {
     public static void show(Main myApp){
         Alert alert = new Alert(Alert.AlertType.WARNING, "确定退出挂号系统？");

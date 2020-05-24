@@ -12,6 +12,13 @@ public class DoctorLogin {
         preparedStatement = conn.prepareStatement(sql);
     }
 
+    /**
+     * 检查编号和密码是否正确
+     * @param ID
+     * @param passwd
+     * @return
+     * @throws SQLException
+     */
     public YiShengTuple login(String ID, String passwd) throws SQLException {
         if (ID != null && passwd != null) {
             preparedStatement.setString(1, ID);

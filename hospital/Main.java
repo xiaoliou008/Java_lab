@@ -28,6 +28,11 @@ public class Main extends Application {
     Controller controller;
     public Connection conn;
 
+    /**
+     * 客户端的入口
+     * @param primaryStage
+     * @throws Exception
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
         stage = primaryStage;
@@ -48,16 +53,23 @@ public class Main extends Application {
         stage.setOnCloseRequest(new WindowCloseHandler());
         stage.show();
 
-        // debug patient
-        changeScene(new PatientTuple(
-                "000003", "张三", "zs", 10.0, new Date(new java.util.Date().getTime())));
+        // debug patient         运行后直接进入病人界面
+//        changeScene(new PatientTuple(
+//                "000003", "张三", "zs", 10.0, new Date(new java.util.Date().getTime())));
 
-        // debug doctor
+        // debug doctor         运行后直接进入医生界面
 //        changeScene(new YiShengTuple(
 //                "000001", "000001", "扁鹊", "bq", "bq", true,
 //                new Date(new java.util.Date().getTime())));
     }
 
+    /**
+     * 切换场景，例如医生登陆、病人登陆后的场景切换
+     * @param targetFXML
+     * @param title
+     * @throws IOException
+     * @throws SQLException
+     */
     public void changeScene(String targetFXML, String title) throws IOException, SQLException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(targetFXML));
         Pane root = loader.load();
@@ -70,12 +82,24 @@ public class Main extends Application {
         stage.show();
     }
 
+    /**
+     * 切换场景，用于病人
+     * @param patient
+     * @throws IOException
+     * @throws SQLException
+     */
     public void changeScene(PatientTuple patient) throws IOException, SQLException {
         changeScene("patient/patient.fxml", "病人挂号");
         ((PatientController) controller).setPatient(patient);
         ((PatientController) controller).getTextPatientName().setText(patient.getBRMC());
     }
 
+    /**
+     * 切换场景，用于医生
+     * @param doctor
+     * @throws IOException
+     * @throws SQLException
+     */
     public void changeScene(YiShengTuple doctor) throws IOException, SQLException {
         changeScene("doctor/doctor.fxml", "医生：" + doctor.getName());
         ((DoctorController) controller).setDoctor(doctor);
@@ -83,6 +107,9 @@ public class Main extends Application {
 //        ((DoctorController)controller).getTextFieldPatientName().setText(doctor.getBRMC());
     }
 
+    /**
+     * 捕获窗口关闭的消息，窗口关闭时把数据库连接也关闭
+     */
     class WindowCloseHandler implements EventHandler<WindowEvent> {
 
         @Override
@@ -100,6 +127,10 @@ public class Main extends Application {
         return stage;
     }
 
+    /**
+     * 设置标题中的时间（数据库时间同步，相当于心跳检测）
+     * @param primaryStage
+     */
     private void setTimeTitle(Stage primaryStage) {
         EventHandler<ActionEvent> timeEventHandler = e -> {
             try {
@@ -114,6 +145,10 @@ public class Main extends Application {
         animation.play();
     }
 
+    /**
+     * 整个程序的入口
+     * @param args
+     */
     static public void main(String[] args) {
         launch(args);
     }

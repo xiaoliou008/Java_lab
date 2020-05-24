@@ -2,6 +2,9 @@ package hospital.mysql;
 
 import java.sql.*;
 
+/**
+ * 创建数据库连接的工厂
+ */
 public class ConnectionFactory {
     public static Connection create(String url, String root, String pwd){
         Connection conn = null;

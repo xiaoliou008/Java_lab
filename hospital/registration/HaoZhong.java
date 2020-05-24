@@ -17,6 +17,11 @@ public class HaoZhong {
         preparedStatement = conn.prepareStatement(sql);
     }
 
+    /**
+     * 获取所有的号种
+     * @return
+     * @throws SQLException
+     */
     public List<HaoZhongTuple> getRelation() throws SQLException {
         List<HaoZhongTuple> list = new ArrayList<>();
         ResultSet res = preparedStatement.executeQuery();

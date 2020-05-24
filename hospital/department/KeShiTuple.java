@@ -2,6 +2,9 @@ package hospital.department;
 
 import hospital.shared.PYZSAccessible;
 
+/**
+ * 科室信息
+ */
 public class KeShiTuple implements PYZSAccessible {
     private String KSBH;
     private String KSMC;

@@ -5,6 +5,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * 用于测试，实际没用
+ */
 public class Consult {
     public static void main(String[] args) {
         String url = "jdbc:mysql://localhost:3306/第3章习题";

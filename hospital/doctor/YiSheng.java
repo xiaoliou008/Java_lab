@@ -9,6 +9,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 获取医生的列表
+ */
 public class YiSheng {
     private Connection conn;
     private String sql = "SELECT * FROM T_KSYS";

@@ -19,6 +19,10 @@ public class RegistTuple {
         this.isExpert = isExpert;
     }
 
+    /**
+     * 配置医生界面的表
+     * @param tableView
+     */
     public static void configTable(TableView<RegistTuple> tableView){
         TableColumn<RegistTuple, String> tc_id = new TableColumn<>("挂号编号");
         tc_id.setCellValueFactory(new PropertyValueFactory<RegistTuple, String>("ID"));

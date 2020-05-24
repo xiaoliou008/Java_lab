@@ -7,6 +7,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 获取科室列表
+ */
 public class KeShi {
     private Connection conn;
     private String sql = "SELECT * FROM T_KSXX";
@@ -17,6 +20,11 @@ public class KeShi {
         preparedStatement = conn.prepareStatement(sql);
     }
 
+    /**
+     * 获取科室列表
+     * @return
+     * @throws SQLException
+     */
     public List<KeShiTuple> getRelation() throws SQLException {
         List<KeShiTuple> list = new ArrayList<>();
         ResultSet res = preparedStatement.executeQuery();

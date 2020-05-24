@@ -2,6 +2,9 @@ package hospital.registration;
 
 import hospital.shared.PYZSAccessible;
 
+/**
+ * 号种类型类
+ */
 public class HaoZhongType implements PYZSAccessible {
 
     private boolean isExpert = false;

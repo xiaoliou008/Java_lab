@@ -7,6 +7,10 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
+/**
+ * 这套代码是网上stackoverflow的一份代码
+ * 我参考它编写了自己的ConfigComboBox
+ */
 public class FxUtilTest {
 
     public interface AutoCompleteComparator<T> {

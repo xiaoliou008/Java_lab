@@ -8,6 +8,9 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+/**
+ * 医生
+ */
 public class YiShengTuple implements PYZSAccessible {
 
     private String YSBH;

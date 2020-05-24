@@ -24,8 +24,16 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public class ConfigComboBox<E> {
-    public static<E extends PYZSAccessible> void config(ComboBox<E> comboBox, Node nextFocused, List<E> list){     // 要在static后面加<E>，否则编译报错
-//        ObservableList<E> originData = comboBox.getItems();
+    /**
+     * 使用外部更新的列表来配置combobox
+     * @param comboBox
+     * @param nextFocused
+     * @param list
+     * @param <E>
+     */
+    public static<E extends PYZSAccessible> void config(ComboBox<E> comboBox, Node nextFocused, List<E> list){
+        // 要在static后面加<E>，否则编译报错
+        //        ObservableList<E> originData = comboBox.getItems();
 
         comboBox.setEditable(true);
         comboBox.setPromptText("无");
@@ -288,6 +296,7 @@ public class ConfigComboBox<E> {
                         comboBox.show();
                         currentSel = Math.max(currentSel-1, 0);
                         comboBox.getSelectionModel().select(currentSel);
+                        comboBox.setVisibleRowCount(6);
                         return;
                     case DOWN:
                         comboBox.show();
@@ -295,6 +304,7 @@ public class ConfigComboBox<E> {
                             currentSel = Math.min(currentSel + 1, comboBox.getItems().size() - 1);
                             comboBox.getSelectionModel().select(currentSel);
                         }
+                        comboBox.setVisibleRowCount(6);
                         return;
                     case BACK_SPACE:
                     case DELETE:
@@ -367,6 +377,7 @@ public class ConfigComboBox<E> {
                 changeCaret(t1.length());
                 updateCaret = false;
                 caretPos = 0;
+                comboBox.setVisibleRowCount(6);
                 comboBox.show();
             }
 
