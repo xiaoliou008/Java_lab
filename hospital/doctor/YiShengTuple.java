@@ -73,7 +73,7 @@ public class YiShengTuple implements PYZSAccessible {
      */
     public void updateLogin(Connection conn) throws SQLException {
         String now = ConnectionFactory.getSQLTime(conn);
-        String sql = "UPDATE T_BRXX\n" +
+        String sql = "UPDATE T_KSYS\n" +
                 "SET DLRQ = '" + now +
                 "'\nWHERE YSBH = " + YSBH;
         System.out.println(sql);

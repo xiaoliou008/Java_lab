@@ -13,6 +13,7 @@ import hospital.registration.HaoZhongTuple;
 import hospital.registration.HaoZhongType;
 import hospital.patient.update.UpdateGHXX;
 import hospital.shared.ExitAlert;
+import hospital.shared.HelpAlert;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -30,6 +31,7 @@ import java.util.Date;
 import java.util.List;
 
 import static java.lang.System.exit;
+import static java.lang.System.in;
 import static javafx.stage.WindowEvent.WINDOW_CLOSE_REQUEST;
 
 public class PatientController extends Controller {
@@ -44,6 +46,7 @@ public class PatientController extends Controller {
     @FXML public Button OKButton;
     @FXML public Text textPatientName;
     @FXML public CheckBox checkBoxYuE;
+    @FXML public MenuItem menuOK;
 
     private double pay = 0.0;
     private UpdateGHXX updateGHXX;
@@ -210,6 +213,12 @@ public class PatientController extends Controller {
         disableAllField(false);
         comboBoxKSMC.getSelectionModel().clearSelection();
         comboBoxKSMC.getEditor().clear();
+        comboBoxHZLB.getSelectionModel().clearSelection();
+        comboBoxHZLB.getEditor().clear();
+        comboBoxYSXM.getSelectionModel().clearSelection();
+        comboBoxYSXM.getEditor().clear();
+        comboBoxHZLB.setDisable(true);
+        comboBoxHZMC.setDisable(true);
         // 其他的选项框自动清除
         textFieldJKJE.clear();
         textFieldYJJE.clear();
@@ -217,6 +226,7 @@ public class PatientController extends Controller {
         textFieldGHHM.clear();
         comboBoxKSMC.requestFocus();
         OKButton.setDisable(false);
+        menuOK.setDisable(false);
     }
 
     public void OKHandler(ActionEvent actionEvent) throws SQLException {
@@ -310,6 +320,7 @@ public class PatientController extends Controller {
                 System.out.println("挂号成功");
                 textFieldGHHM.setText(GHHM);
                 OKButton.setDisable(true);      // 避免重复挂号
+                menuOK.setDisable(true);
                 disableAllField(true);
             }
         }
@@ -346,7 +357,7 @@ public class PatientController extends Controller {
                 if (response == ButtonType.OK) {
                     System.out.println("退号");
                     try {
-                        updateGHXX.cancel(ghbh);
+                        updateGHXX.cancel(ghbh, patient);
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
@@ -360,6 +371,33 @@ public class PatientController extends Controller {
                 }
             });
         }
+    }
+
+    public void helperHandler(ActionEvent actionEvent) {
+        HelpAlert.show(myApp);
+    }
+
+
+    public void askMoneyHandler(ActionEvent actionEvent) throws SQLException {
+        double money = patient.getYE(myApp.conn);
+        HelpAlert.show(myApp, "当前余额：" + money);
+    }
+
+    public void depositHandler(ActionEvent actionEvent) {
+        TextInputDialog input = new TextInputDialog("请输入存款金额");
+        input.showAndWait().ifPresent(response -> {
+            System.out.println("存款：" + response);
+            try {
+                patient.addYE(myApp.conn, Double.parseDouble(response));
+                HelpAlert.show(myApp, "存款成功！");
+                input.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } catch (NumberFormatException e){
+                HelpAlert.show(myApp, "存款失败！\n请输入正确的金额");
+                input.close();
+            }
+        });
     }
 }
 

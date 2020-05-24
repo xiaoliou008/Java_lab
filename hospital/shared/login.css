@@ -1,0 +1,5 @@
+.root
+{
+    -fx-background-color: radial-gradient(center 50% 50%, radius 70%, #FFEC8B, #EEA9B8, #B9D3EE);
+    /*-fx-background-color: radial-gradient(focus-angle 90deg, focus-distance 50%, center 50% 50%, radius 50%, reflect, #FFEC8B, #EEA9B8 75%, #B9D3EE);*/
+}

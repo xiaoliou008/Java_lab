@@ -7,17 +7,18 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="489.0" prefWidth="531.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hospital.doctor.DoctorController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="489.0" prefWidth="531.0" stylesheets="@../shared/login.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hospital.doctor.DoctorController">
    <children>
       <VBox layoutX="43.0" layoutY="59.0" prefHeight="416.0" prefWidth="445.0">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="病人列表" textAlignment="CENTER" wrappingWidth="454.0">
+            <Text fx:id="textTitle" strokeType="OUTSIDE" strokeWidth="0.0" text="病人列表" textAlignment="CENTER" wrappingWidth="454.0">
                <font>
                   <Font size="25.0" />
                </font>
@@ -93,18 +94,33 @@
         <menus>
           <Menu mnemonicParsing="false" text="查询">
             <items>
-              <MenuItem mnemonicParsing="false" text="病人" />
-                  <MenuItem mnemonicParsing="false" text="收入" />
+              <MenuItem mnemonicParsing="false" onAction="#bntPatientHandler" text="病人">
+                     <accelerator>
+                        <KeyCodeCombination alt="ANY" code="A" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#btnIncomeHandler" text="收入">
+                     <accelerator>
+                        <KeyCodeCombination alt="ANY" code="S" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
             </items>
+               <accelerator>
+                  <KeyCodeCombination alt="ANY" code="C" control="UP" meta="UP" shift="UP" shortcut="UP" />
+               </accelerator>
           </Menu>
           <Menu mnemonicParsing="false" text="编辑">
             <items>
-              <MenuItem mnemonicParsing="false" text="初始化" />
+              <MenuItem mnemonicParsing="false" onAction="#menuInitHandler" text="初始化">
+                     <accelerator>
+                        <KeyCodeCombination alt="ANY" code="I" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="帮助">
             <items>
-              <MenuItem mnemonicParsing="false" text="关于" />
+              <MenuItem mnemonicParsing="false" onAction="#helperHandler" text="关于">
+                     <accelerator>
+                        <KeyCodeCombination alt="ANY" code="H" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
             </items>
           </Menu>
         </menus>

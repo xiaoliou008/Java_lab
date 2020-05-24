@@ -1,6 +1,7 @@
 package hospital.patient.update;
 
 import hospital.mysql.ConnectionFactory;
+import hospital.patient.PatientTuple;
 
 import java.sql.*;
 import java.text.SimpleDateFormat;
@@ -148,7 +149,7 @@ public class UpdateGHXX {
             return num + 1; // +1表示当前病人的人次
     }
 
-    public void cancel(String ghbh) throws SQLException {
+    public void cancel(String ghbh, PatientTuple patient) throws SQLException {
         cancelStat.setString(1, ghbh);
         cancelStat.executeUpdate();
         String sql = "SELECT GHFY FROM T_GHXX WHERE GHBH = " + ghbh;
@@ -159,7 +160,7 @@ public class UpdateGHXX {
             money = res.getDouble(1);
         }       // 退号之后，把钱还给病人，存入账户余额
         System.out.println(money);
-        sql = "UPDATE T_BRXX SET YCJE = YCJE + " + money + " WHERE BRBH = " + ghbh;
+        sql = "UPDATE T_BRXX SET YCJE = YCJE + " + money + " WHERE BRBH = " + patient.getBRBH();
         statement = conn.prepareStatement(sql);
         statement.executeUpdate();
     }

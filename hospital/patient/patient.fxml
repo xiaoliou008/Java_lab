@@ -8,13 +8,14 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="417.0" prefWidth="614.0" style="-fx-border-color: transparent;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hospital.patient.PatientController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="417.0" prefWidth="614.0" style="-fx-border-color: transparent;" stylesheets="@../shared/login.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hospital.patient.PatientController">
    <children>
       <VBox layoutX="38.0" layoutY="55.0" prefHeight="330.0" prefWidth="538.0">
          <children>
@@ -91,7 +92,7 @@
                         <Font size="20.0" />
                      </font>
                   </Text>
-                  <TextField fx:id="textFieldYJJE" layoutX="96.0" layoutY="10.0" prefHeight="22.0" prefWidth="170.0" stylesheets="@PatientComboBox.css" />
+                  <TextField fx:id="textFieldYJJE" editable="false" layoutX="96.0" layoutY="10.0" prefHeight="22.0" prefWidth="170.0" stylesheets="@PatientComboBox.css" />
                </children>
             </HBox>
             <Pane layoutX="10.0" layoutY="131.0" prefHeight="16.0" prefWidth="538.0" />
@@ -102,14 +103,14 @@
                         <Font size="20.0" />
                      </font>
                   </Text>
-                  <TextField fx:id="textFieldZLJE" prefHeight="22.0" prefWidth="170.0" stylesheets="@PatientComboBox.css" />
+                  <TextField fx:id="textFieldZLJE" editable="false" prefHeight="22.0" prefWidth="170.0" stylesheets="@PatientComboBox.css" />
                   <Pane prefHeight="34.0" prefWidth="37.0" />
                   <Text layoutX="10.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="挂号号码 ">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </Text>
-                  <TextField fx:id="textFieldGHHM" prefHeight="22.0" prefWidth="170.0" stylesheets="@PatientComboBox.css" />
+                  <TextField fx:id="textFieldGHHM" editable="false" prefHeight="22.0" prefWidth="170.0" stylesheets="@PatientComboBox.css" />
                </children>
             </HBox>
             <Pane layoutX="10.0" layoutY="169.0" prefHeight="39.0" prefWidth="538.0">
@@ -132,18 +133,40 @@
         <menus>
           <Menu mnemonicParsing="false" text="挂号">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#menuTHHandler" text="退号" />
-                  <MenuItem mnemonicParsing="false" text="清空" />
+                  <MenuItem fx:id="menuOK" mnemonicParsing="false" onAction="#OKHandler" text="确定">
+                     <accelerator>
+                        <KeyCodeCombination alt="ANY" code="G" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
+              <MenuItem mnemonicParsing="false" onAction="#menuTHHandler" text="退号">
+                     <accelerator>
+                        <KeyCodeCombination alt="ANY" code="T" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#clearHandler" text="清空">
+                     <accelerator>
+                        <KeyCodeCombination alt="ANY" code="Q" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="查询">
+          <Menu mnemonicParsing="false" text="余额">
             <items>
-              <MenuItem mnemonicParsing="false" text="查询余额" />
+              <MenuItem mnemonicParsing="false" onAction="#askMoneyHandler" text="查询余额">
+                     <accelerator>
+                        <KeyCodeCombination alt="ANY" code="Y" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#depositHandler" text="存款">
+                     <accelerator>
+                        <KeyCodeCombination alt="ANY" code="C" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="帮助">
             <items>
-              <MenuItem mnemonicParsing="false" text="关于" />
+              <MenuItem mnemonicParsing="false" onAction="#helperHandler" text="关于">
+                     <accelerator>
+                        <KeyCodeCombination alt="ANY" code="H" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
             </items>
           </Menu>
         </menus>

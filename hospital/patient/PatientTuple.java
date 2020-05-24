@@ -62,6 +62,18 @@ public class PatientTuple {
     }
 
     /**
+     * 增加余额
+     * @param conn
+     * @param addYCJE
+     * @throws SQLException
+     */
+    public void addYE(Connection conn, double addYCJE) throws SQLException {
+        String sql = "UPDATE T_BRXX SET YCJE=YCJE+" + addYCJE + " WHERE BRBH=" + BRBH;
+        PreparedStatement preparedStatement = conn.prepareStatement(sql);
+        preparedStatement.executeUpdate();
+    }
+
+    /**
      * 更新病人的登陆时间
      * @param conn
      */

@@ -13,8 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Income {
-    private Connection conn;
-    private String sql = "SELECT KSMC, T_GHXX.YSBH, YSMC, T_HZXX.SFZJ , SUM(GHRC) AS GHRC , SUM(T_GHXX.GHFY) AS SRHJ\n" +
+    private Connection conn;        // 下面不应该是SUM(GHRC)，而应该是COUNT(GHRC)
+    private String sql = "SELECT KSMC, T_GHXX.YSBH, YSMC, T_HZXX.SFZJ , COUNT(GHRC) AS GHRC , SUM(T_GHXX.GHFY) AS SRHJ\n" +
             "FROM T_GHXX, T_KSXX, T_KSYS, T_HZXX\n" +
             "WHERE T_GHXX.HZBH = T_HZXX.HZBH AND\n" +
             "T_HZXX.KSBH = T_KSXX.KSBH AND\n" +
@@ -51,8 +51,18 @@ public class Income {
 
     public List<IncomeTuple> getRelation(YiShengTuple doctor, String begin, String end) throws SQLException {
         List<IncomeTuple> list = new ArrayList<>();
-        for(IncomeTuple t : getRelation(doctor)){
-
+        preparedStatement.setString(1, begin + " 00:00:00");       // 不需要额外加单引号
+        preparedStatement.setString(2, end + " 23:59:59");
+        ResultSet res = preparedStatement.executeQuery();
+        while (res.next()) {
+            list.add(new IncomeTuple(
+                    res.getString("KSMC"),
+                    res.getString("YSBH"),
+                    res.getString("YSMC"),
+                    res.getBoolean("SFZJ"),
+                    res.getInt("GHRC"),
+                    res.getDouble("SRHJ")
+            ));
         }
         return list;
     }

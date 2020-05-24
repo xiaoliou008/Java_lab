@@ -4,14 +4,17 @@ import hospital.Controller;
 import hospital.Main;
 import hospital.doctor.income.Income;
 import hospital.doctor.income.IncomeTuple;
+import hospital.mysql.ConnectionFactory;
 import hospital.registration.Regist;
 import hospital.registration.RegistTuple;
 import hospital.shared.ExitAlert;
+import hospital.shared.HelpAlert;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 import javafx.stage.WindowEvent;
 
 import java.sql.Date;
@@ -29,6 +32,7 @@ public class DoctorController extends Controller {
     @FXML public TableView tablePatient;
     @FXML public DatePicker DatePickerBegin;
     @FXML public DatePicker DatePickerEnd;
+    @FXML public Text textTitle;
     private Main myApp;
     private YiShengTuple doctor;
     private Regist register;
@@ -54,7 +58,8 @@ public class DoctorController extends Controller {
         panePatient.setVisible(true);
         RegistTuple.configTable(tablePatient);
         IncomeTuple.configTable(tableIncome);
-        listRegistTuple = register.getRelation(doctor);
+        String today = ConnectionFactory.getSQLTime(myApp.conn).split(" ")[0];
+        listRegistTuple = register.getRelation(doctor, today, today);
         tablePatient.getItems().setAll(listRegistTuple);
         // debug
 //        tableIncome.getItems().add(new IncomeTuple("nk", "bq", "bq", true, 10, 5.5));
@@ -63,11 +68,13 @@ public class DoctorController extends Controller {
     }
 
     public void bntPatientHandler(ActionEvent actionEvent) {
+        textTitle.setText("病人列表");
         panePatient.setVisible(true);
         paneIncome.setVisible(false);
     }
 
     public void btnIncomeHandler(ActionEvent actionEvent) {
+        textTitle.setText("收入列表");
         panePatient.setVisible(false);
         paneIncome.setVisible(true);
     }
@@ -81,11 +88,23 @@ public class DoctorController extends Controller {
         listRegistTuple = register.getRelation(
                 doctor, DatePickerBegin.getValue().toString(), DatePickerEnd.getValue().toString());
         tablePatient.getItems().setAll(listRegistTuple);
-        incomeTupleList = incomeGetter.getRelation(doctor);
+        incomeTupleList = incomeGetter.getRelation(
+                doctor, DatePickerBegin.getValue().toString(), DatePickerEnd.getValue().toString());
         tableIncome.getItems().setAll(incomeTupleList);
     }
 
-    public void datePicketEndHandler(ActionEvent actionEvent) {
+    public void datePicketEndHandler(ActionEvent actionEvent) throws SQLException {
         System.out.println(DatePickerEnd.getValue());
+        datePicketBeginHandler(actionEvent);
+    }
+
+    public void menuInitHandler(ActionEvent actionEvent) throws SQLException {
+        DatePickerBegin.setValue(LocalDate.now());
+        DatePickerEnd.setValue(LocalDate.now());
+        configTable();
+    }
+
+    public void helperHandler(ActionEvent actionEvent) {
+        HelpAlert.show(myApp);
     }
 }

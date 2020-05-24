@@ -49,8 +49,8 @@ public class Main extends Application {
         stage.show();
 
         // debug patient
-//        changeScene(new PatientTuple(
-//                "000003", "张三", "zs", 10.0, new Date(new java.util.Date().getTime())));
+        changeScene(new PatientTuple(
+                "000003", "张三", "zs", 10.0, new Date(new java.util.Date().getTime())));
 
         // debug doctor
 //        changeScene(new YiShengTuple(
